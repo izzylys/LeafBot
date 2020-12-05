@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace LeafBot.Data
 {
@@ -11,7 +13,7 @@ namespace LeafBot.Data
     public string Token { get; private set; }
 
     [JsonProperty("prefix")]
-    public string CommandPrefix { get; private set; }
+    public List<String> CommandPrefix { get; private set; }
 
     [JsonProperty("loglevel")]
     public string LogLevel { get; private set; }
