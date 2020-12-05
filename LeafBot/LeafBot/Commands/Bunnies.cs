@@ -21,5 +21,16 @@ namespace LeafBot.Commands
       };
       await ctx.Channel.SendMessageAsync(embed: embed);
     }
+
+    [Command("curious")]
+    [Description("blesses you with a photo of a curious bun")]
+    public async Task Curious(CommandContext ctx)
+    {
+      var embed = new DiscordEmbedBuilder
+      {
+        ImageUrl = Links.CURIOIUS_BUNS[rng.Next(Links.CURIOIUS_BUNS.Length)]
+      };
+      await ctx.Channel.SendMessageAsync(embed: embed);
+    }
   }
 }
