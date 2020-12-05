@@ -17,6 +17,7 @@ namespace LeafBot.Commands
     {
       var embed = new DiscordEmbedBuilder
       {
+        Color = DiscordColor.PhthaloBlue,
         ImageUrl = Links.SLEEPY_BUNS[rng.Next(Links.SLEEPY_BUNS.Length)]
       };
       await ctx.Channel.SendMessageAsync(embed: embed);
@@ -28,7 +29,20 @@ namespace LeafBot.Commands
     {
       var embed = new DiscordEmbedBuilder
       {
-        ImageUrl = Links.CURIOIUS_BUNS[rng.Next(Links.CURIOIUS_BUNS.Length)]
+        Color = DiscordColor.HotPink,
+        ImageUrl = Links.CURIOUS_BUNS[rng.Next(Links.CURIOUS_BUNS.Length)]
+      };
+      await ctx.Channel.SendMessageAsync(embed: embed);
+    }
+
+    [Command("angry")]
+    [Description("curses you with a photo of an angry bun")]
+    public async Task Angry(CommandContext ctx)
+    {
+      var embed = new DiscordEmbedBuilder
+      {
+        Color = DiscordColor.Red,
+        ImageUrl = Links.ANGRY_BUNS[rng.Next(Links.ANGRY_BUNS.Length)]
       };
       await ctx.Channel.SendMessageAsync(embed: embed);
     }
