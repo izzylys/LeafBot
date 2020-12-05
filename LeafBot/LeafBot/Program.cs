@@ -19,6 +19,10 @@ namespace LeafBot
     private static string configPath = "config.json";
     static void Main(string[ ] args)
     {
+      // Save some stats for later
+      Stats.StartTime = DateTime.Now;
+      Stats.PCName = Environment.MachineName;
+
       // pass execution through async method
       var program = new Program();
       program.RunBotAsync().GetAwaiter().GetResult();
@@ -115,6 +119,7 @@ namespace LeafBot
       Commands = Client.UseCommandsNext(ccfg);
 
       Commands.RegisterCommands<Bunnies>();
+      Commands.RegisterCommands<Commands.Utilities>();
     }
   }
 }

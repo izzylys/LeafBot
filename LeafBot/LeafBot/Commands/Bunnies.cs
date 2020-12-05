@@ -15,6 +15,9 @@ namespace LeafBot.Commands
     [Description("blesses you with a photo of a sleepy bun")]
     public async Task Sleepy(CommandContext ctx)
     {
+      // Gotta keep track of those buns
+      Stats.BunniesServed++;
+
       var embed = new DiscordEmbedBuilder
       {
         ImageUrl = Links.SLEEPY_BUNS[rng.Next(Links.SLEEPY_BUNS.Length)]
@@ -26,6 +29,7 @@ namespace LeafBot.Commands
     [Description("blesses you with a photo of a curious bun")]
     public async Task Curious(CommandContext ctx)
     {
+      Stats.BunniesServed++;
       var embed = new DiscordEmbedBuilder
       {
         ImageUrl = Links.CURIOIUS_BUNS[rng.Next(Links.CURIOIUS_BUNS.Length)]
