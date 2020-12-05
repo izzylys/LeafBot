@@ -4,6 +4,8 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using DSharpPlus;
+using DSharpPlus.CommandsNext;
+using LeafBot.Commands;
 using LeafBot.Data;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -13,6 +15,7 @@ namespace LeafBot
   class Program
   {
     public DiscordClient Client { get; set; }
+    public CommandsNextExtension Commands { get; set; }
     private static string configPath = "config.json";
     static void Main(string[ ] args)
     {
@@ -27,6 +30,7 @@ namespace LeafBot
       var cfgJson = await ReadConfigFile(configPath);
       var cfgDiscord = ConfigureDiscord(cfgJson);
       Client = new DiscordClient(cfgDiscord);
+      ConfigureCommands(cfgJson);
 
       // connect, baby!
       Debug.WriteLine("Connecting to discord...");
@@ -96,6 +100,21 @@ namespace LeafBot
       };
 
       return cfg;
+    }
+
+    private void ConfigureCommands(ConfigJson config)
+    {
+      Debug.WriteLine("Setting up commands...");
+      var ccfg = new CommandsNextConfiguration()
+      {
+        StringPrefixes = config.CommandPrefix,
+        CaseSensitive = false,
+        EnableDms = true,
+        EnableMentionPrefix = true
+      };
+      Commands = Client.UseCommandsNext(ccfg);
+
+      Commands.RegisterCommands<Bunnies>();
     }
   }
 }
