@@ -7,6 +7,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using LeafBot.Commands;
 using LeafBot.Data;
+using LeafBot.Events;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -31,6 +32,7 @@ namespace LeafBot
       var cfgDiscord = ConfigureDiscord(cfgJson);
       Client = new DiscordClient(cfgDiscord);
       ConfigureCommands(cfgJson);
+      ConfigureEvents();
 
       // connect, baby!
       Debug.WriteLine("Connecting to discord...");
@@ -104,7 +106,7 @@ namespace LeafBot
 
     private void ConfigureCommands(ConfigJson config)
     {
-      Debug.WriteLine("Setting up commands...");
+      Client.Logger.LogInformation(StaticEvents.BotEventId, $"Setting up commands...");
       var ccfg = new CommandsNextConfiguration()
       {
         StringPrefixes = config.CommandPrefix,
@@ -114,7 +116,17 @@ namespace LeafBot
       };
       Commands = Client.UseCommandsNext(ccfg);
 
+      Commands.CommandExecuted += StaticEvents.Commands_CommandExecuted;
+      Commands.CommandErrored += StaticEvents.Commands_CommandErrored;
+
       Commands.RegisterCommands<Bunnies>();
+    }
+
+    private void ConfigureEvents()
+    {
+      Client.Logger.LogInformation(StaticEvents.BotEventId, "Setting up events...");
+      Client.Ready += StaticEvents.Client_Ready;
+      Client.ClientErrored += StaticEvents.Client_ClientError;
     }
   }
 }
