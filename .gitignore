@@ -7,6 +7,12 @@
 *.userosscache
 *.sln.docstates
 
+# discord bot config
+config.json
+
+# vs code files
+.vscode/
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
