@@ -28,7 +28,7 @@ namespace LeafBot.Commands
     {
       var embed = new DiscordEmbedBuilder
       {
-        ImageUrl = Links.CURIOIUS_BUNS[rng.Next(Links.CURIOIUS_BUNS.Length)]
+        ImageUrl = Links.CURIOUS_BUNS[rng.Next(Links.CURIOUS_BUNS.Length)]
       };
       await ctx.Channel.SendMessageAsync(embed: embed);
     }

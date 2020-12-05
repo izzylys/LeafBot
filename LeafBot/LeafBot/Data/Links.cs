@@ -13,7 +13,7 @@
       "https://user-images.githubusercontent.com/7717434/101260995-aff32100-372b-11eb-9e12-88b740d58e53.jpg",
     };
 
-    public static string[ ] CURIOIUS_BUNS = {
+    public static string[ ] CURIOUS_BUNS = {
       "https://user-images.githubusercontent.com/7717434/101261147-eda47980-372c-11eb-8955-7d7627f60823.jpg",
       "https://user-images.githubusercontent.com/7717434/101261156-06ad2a80-372d-11eb-9053-847da44e5181.jpg",
       "https://user-images.githubusercontent.com/7717434/101261163-0d3ba200-372d-11eb-8030-6ff0d92e36eb.jpg",
