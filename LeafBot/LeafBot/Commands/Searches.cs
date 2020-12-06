@@ -27,7 +27,11 @@ namespace LeafBot.Commands
       // trim and sanity check query string
       query = query?.Trim();
       if (string.IsNullOrWhiteSpace(query))
+      {
+        DiscordEmoji emoji = DiscordEmoji.FromName(ctx.Client, ":thinking:");
+        await ctx.Channel.SendMessageAsync($"Leafbot is pretty amazing but I can't search for nothing my dude {emoji}");
         return;
+      }
 
       using (var webClient = new HttpClient())
       {
@@ -59,7 +63,11 @@ namespace LeafBot.Commands
     {
       query = query?.Trim();
       if (string.IsNullOrWhiteSpace(query))
+      {
+        DiscordEmoji emoji = DiscordEmoji.FromName(ctx.Client, ":thinking:");
+        await ctx.Channel.SendMessageAsync($"Leafbot is pretty amazing but I can't search for nothing my dude {emoji}");
         return;
+      }
 
       using (var webClient = new HttpClient())
       {
