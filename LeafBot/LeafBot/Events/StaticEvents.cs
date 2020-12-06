@@ -7,7 +7,9 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Exceptions;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
+using LeafBot.Data;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace LeafBot.Events
 {
@@ -83,9 +85,7 @@ namespace LeafBot.Events
       {
         using(StreamWriter sw = new StreamWriter(storePath))
         {
-          // random stuff for not until @killeroo's stuff is merged
-          var r = new Random();
-          await sw.WriteAsync($"{{\"buns\":\"123\",\"rng\":\"{r.Next()}\",\"status\":0}}");
+          await sw.WriteAsync($"{{\"start_time\":\"{Stats.StartTime}\",\"bunnies_served\":\"{Stats.BunniesServed}\", \"pc_name\": \"{Stats.PCName}\"}}");
         }
 
       }
