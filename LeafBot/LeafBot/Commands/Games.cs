@@ -17,7 +17,7 @@ namespace LeafBot.Commands
 
     [Command("roll")]
     [Description("Instructs LeafBot to roll a lettuce shaped dice")]
-    [Aliases("rtd", "dice", "rollthedice")]
+    [Aliases("rtd", "dice", "rollthedice", "r")]
     public async Task RollTheDice(CommandContext ctx)
     {
       DiscordEmoji emoji = DiscordEmoji.FromName(ctx.Client, ":game_die:");
@@ -47,7 +47,7 @@ namespace LeafBot.Commands
 
     [Command("role")]
     [Description("LeafBot will decide what role you should queue as, indecisive fool...")]
-    [Aliases("icantdecide", "pickrole", "halp", "queue")]
+    [Aliases("icantdecide", "pickrole", "halp", "queue", "roles")]
     public async Task PickRole(CommandContext ctx)
     {
       DiscordEmoji damageEmoji = DiscordEmoji.FromName(ctx.Client, ":crossed_swords:");
