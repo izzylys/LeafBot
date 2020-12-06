@@ -15,11 +15,17 @@ namespace LeafBot
 {
   class Program
   {
+    public const string VERSION = "0.5";
+
     public DiscordClient Client { get; set; }
     public CommandsNextExtension Commands { get; set; }
     private static string configPath = "config.json";
     static void Main(string[ ] args)
     {
+      // Save some stats for later
+      Stats.StartTime = DateTime.Now;
+      Stats.PCName = Environment.MachineName;
+
       // pass execution through async method
       var program = new Program();
       program.RunBotAsync().GetAwaiter().GetResult();
@@ -120,6 +126,8 @@ namespace LeafBot
       Commands.CommandErrored += StaticEvents.Commands_CommandErrored;
 
       Commands.RegisterCommands<Bunnies>();
+      Commands.RegisterCommands<Commands.Utilities>();
+      Commands.RegisterCommands<Games>();
     }
 
     private void ConfigureEvents()

@@ -2,6 +2,9 @@
 {
   public class Links
   {
+    public static string STATUS_BUN = "https://i.chzbgr.com/full/5160709120/hE028E303/building-a-better-bunhouse.jpg";
+    public static string STATUS_THUMBNAIL_BUN = "https://user-images.githubusercontent.com/7717434/101261156-06ad2a80-372d-11eb-9053-847da44e5181.jpg";
+
     // sleepy bunnies
     public static string[ ] SLEEPY_BUNS = {
       "https://user-images.githubusercontent.com/7717434/101266456-f0ac6380-3746-11eb-8b22-c97c45e93dcb.jpg",
