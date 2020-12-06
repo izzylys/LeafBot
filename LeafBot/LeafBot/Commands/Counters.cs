@@ -14,6 +14,7 @@ namespace LeafBot.Commands
   {
     [Command("shower")]
     [Description("Track how many times Eddie showers... wait why do we do this again?")]
+    [Aliases("eddieshowering", "eddieshower")]
     public async Task EddieShowering(CommandContext ctx)
     {
       // Increment stat
