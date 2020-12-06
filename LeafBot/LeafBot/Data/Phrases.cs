@@ -18,5 +18,22 @@ namespace LeafBot.Data
       "Go forth",
       "This is the word of the LeafBot"
     };
+
+    public static string[] DELIVERED_PHRASES =
+    {
+      "digitally delivered",
+      "blessed upon you",
+      "served",
+      "blessed you with",
+      "shattered your mortal being with",
+      "lovingly distributed",
+      "has wired you",
+      "networked",
+      "loaned you",
+      "programmatically gifted",
+      "hooked you up with",
+      "cashlessly granted",
+      "lent"
+    };
   }
 }

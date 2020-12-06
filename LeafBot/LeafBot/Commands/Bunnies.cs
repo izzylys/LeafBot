@@ -58,7 +58,7 @@ namespace LeafBot.Commands
     {
       DiscordEmoji emoji = DiscordEmoji.FromName(ctx.Client, ":rabbit:");
 
-      await ctx.Channel.SendMessageAsync($"LeafBot has digitally delivered {Stats.BunniesServed} bunnies {emoji}");
+      await ctx.Channel.SendMessageAsync($"LeafBot has {Phrases.DELIVERED_PHRASES[rng.Next(Phrases.DELIVERED_PHRASES.Length)]} {Stats.BunniesServed} bunnies {emoji}");
     }
   }
 }
