@@ -1,11 +1,15 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
+using System.Timers;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Exceptions;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
+using LeafBot.Data;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace LeafBot.Events
 {
@@ -52,6 +56,48 @@ namespace LeafBot.Events
         };
         await e.Context.RespondAsync("", embed : embed);
       }
+    }
+
+    public static async void SaveTimer_Elapsed(object sender, ElapsedEventArgs e, DiscordClient client)
+    {
+      client.Logger.LogInformation("Save timer elapsed. Attempting to save stats to local store", DateTime.Now);
+
+      var storePath = @"Data\stats_store.json";
+      var backupPath = @"Data\stats_store_backup.json";
+
+      // backup the store first to avoid corruption if something goes bang
+      try
+      {
+        using(FileStream store = File.Open(storePath, FileMode.Open))
+        using(FileStream backup = File.Open(backupPath, FileMode.Create))
+        {
+          await store.CopyToAsync(backup);
+        }
+      }
+      catch (Exception ex)
+      {
+        client.Logger.LogError(BotEventId, $"Could not backup stats store: {ex.GetType()}: {ex.Message}", DateTime.Now);
+        return;
+      }
+
+      // write the state to the store
+      try
+      {
+        using(StreamWriter sw = new StreamWriter(storePath))
+        {
+          await sw.WriteAsync($"{{\"start_time\": \"{Stats.StartTime}\",\"bunnies_served\": {Stats.BunniesServed}, \"pc_name\": \"{Stats.PCName}\"}}");
+        }
+
+      }
+      catch (Exception ex)
+      {
+        client.Logger.LogError(BotEventId, $"Could not save state to local store: {ex.GetType()}: {ex.Message}", DateTime.Now);
+        return;
+      }
+
+      // delete the backup 
+      await Task.Run(() => File.Delete(backupPath));
+      client.Logger.LogInformation(BotEventId, "Successfully saved stats to the local store", DateTime.Now);
     }
 
   }
