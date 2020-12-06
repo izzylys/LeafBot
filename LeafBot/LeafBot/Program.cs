@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using LeafBot.Commands;
@@ -19,7 +20,9 @@ namespace LeafBot
 
     public DiscordClient Client { get; set; }
     public CommandsNextExtension Commands { get; set; }
+    private Timer SaveTimer;
     private static string configPath = "config.json";
+
     static void Main(string[ ] args)
     {
       // Save some stats for later
@@ -43,6 +46,11 @@ namespace LeafBot
       // connect, baby!
       Debug.WriteLine("Connecting to discord...");
       await Client.ConnectAsync();
+
+      // start the save timer to backup state every hour
+      // TODO: read stats from file to initialise on startup
+      SaveTimer = new Timer(60 * 60 * 1000) { AutoReset = true, Enabled = true };
+      SaveTimer.Elapsed += (object sender, ElapsedEventArgs e) => StaticEvents.SaveTimer_Elapsed(sender, e, Client);
 
       // prevent premature quitting
       await Task.Delay(-1);
