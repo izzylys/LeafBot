@@ -27,11 +27,11 @@ namespace LeafBot.Data
       var path = @"Data\stats_store.json";
       if (!File.Exists(path))
       {
-        File.Create(path);
+        CreateStatsFile(path);
         return;
       }
 
-      // get bunny count from store
+      // get stats from store
       using(StreamReader file = File.OpenText(path))
       {
         var json = await file.ReadToEndAsync();
@@ -39,6 +39,22 @@ namespace LeafBot.Data
 
         BunniesServed = s.bunnies_served;
         EddieShowerCount = s.eddie_shower_count;
+      }
+    }
+
+    public static async void CreateStatsFile(string path)
+    {
+      // NOTE: This should be wrapped in a try but because we don't have accessible logging at the moment
+      // we don't have a way of reporting any errors and addressing them. So let it error for now, revisit this...
+
+      // Create file and save some blank stats to it
+      using (StreamWriter sw = File.CreateText(path))
+      {
+        await sw.WriteAsync(
+          $"{{" +
+          $"\"bunnies_served\": 0," +
+          $"\"eddie_shower_count\": 0" +
+          $"}}");
       }
     }
 
