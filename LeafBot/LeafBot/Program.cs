@@ -120,6 +120,7 @@ namespace LeafBot
 
       Commands.RegisterCommands<Bunnies>();
       Commands.RegisterCommands<Commands.Utilities>();
+      Commands.RegisterCommands<Games>();
     }
   }
 }
