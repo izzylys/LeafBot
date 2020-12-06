@@ -16,7 +16,7 @@ namespace LeafBot.Commands
     private Random random = new Random();
 
     [Command("roll")]
-    [Description("Instructs LeafBot to roll a lettice shaped dice")]
+    [Description("Instructs LeafBot to roll a lettuce shaped dice")]
     [Aliases("rtd", "dice", "rollthedice")]
     public async Task RollTheDice(CommandContext ctx)
     {
