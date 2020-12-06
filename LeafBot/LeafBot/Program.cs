@@ -25,9 +25,8 @@ namespace LeafBot
 
     static void Main(string[ ] args)
     {
-      // Save some stats for later
-      Stats.StartTime = DateTime.Now;
-      Stats.PCName = Environment.MachineName;
+      // initialise bot stats
+      Stats.Initialise();
 
       // pass execution through async method
       var program = new Program();
@@ -49,7 +48,7 @@ namespace LeafBot
 
       // start the save timer to backup state every hour
       // TODO: read stats from file to initialise on startup
-      SaveTimer = new Timer(60 * 60 * 1000) { AutoReset = true, Enabled = true };
+      SaveTimer = new Timer(1000) { AutoReset = true, Enabled = true };
       SaveTimer.Elapsed += (object sender, ElapsedEventArgs e) => StaticEvents.SaveTimer_Elapsed(sender, e, Client);
 
       // prevent premature quitting
