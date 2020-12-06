@@ -4,6 +4,9 @@ using System.Text;
 
 namespace LeafBot.Data.Models
 {
+  /// <summary>
+  /// Json model for Urban Dictionary api responses
+  /// </summary>
   public class UrbanDictionaryApiResponse
   {
     public UrbanDictionaryItem[] List { get; set; }
