@@ -10,7 +10,7 @@ namespace LeafBot.Data
     public static string PCName;
     public static int BunniesServed;
 
-    public async static void Initialise()
+    public static async void Initialise()
     {
       // save session stats
       StartTime = DateTime.Now;
