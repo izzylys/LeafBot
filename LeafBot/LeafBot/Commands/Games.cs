@@ -25,10 +25,10 @@ namespace LeafBot.Commands
     [Aliases("coin", "coinflip")]
     public async Task FlipCoin(CommandContext ctx)
     {
-      DiscordEmoji emoji = DiscordEmoji.FromName(ctx.Client, ":coin:");
+      DiscordEmoji emoji = DiscordEmoji.FromName(ctx.Client, ":leaves:");
 
       string outcome = "";
-      if (random.Next(0, 1) == 1)
+      if (random.Next(0, 2) == 1)
       {
         outcome = "Heads";
       } 
@@ -37,7 +37,7 @@ namespace LeafBot.Commands
         outcome = "Tails";
       }
 
-      await ctx.RespondAsync($"{ctx.Member.Mention} flips a cabbage leaf... {outcome}! ");
+      await ctx.RespondAsync($"{ctx.Member.Mention} flips a cabbage leaf {emoji} ... {outcome}! ");
     }
   }
 }
