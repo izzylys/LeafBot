@@ -66,7 +66,7 @@ namespace LeafBot.Events
         {
           Title = "i'm sorry, i don't know that command",
           Description = $"{emoji} please try a different command",
-          ImageUrl = @"https://user-images.githubusercontent.com/7717434/101267251-8eeff780-374e-11eb-9885-a8236b882bff.jpg",
+          ImageUrl = Links.COMMAND_NOT_FOUND_BUN,
           Color = DiscordColor.DarkRed,
         };
         await e.Context.RespondAsync("", embed : embed);
