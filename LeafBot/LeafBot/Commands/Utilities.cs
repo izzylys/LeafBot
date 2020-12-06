@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+
 using LeafBot.Data;
 
 namespace LeafBot.Commands
@@ -18,7 +19,7 @@ namespace LeafBot.Commands
 
       var embedThumbnail = new DiscordEmbedBuilder.EmbedThumbnail
       {
-        Url = @"https://user-images.githubusercontent.com/7717434/101261156-06ad2a80-372d-11eb-9053-847da44e5181.jpg"
+        Url = Links.STATUS_THUMBNAIL_BUN
       };
       var embedFooter = new DiscordEmbedBuilder.EmbedFooter
       {
@@ -28,7 +29,7 @@ namespace LeafBot.Commands
       var embed = new DiscordEmbedBuilder
       {
         Title = $"{rabbitEmoji} LeafBot Status {toolsEmoji}",
-        ImageUrl = @"https://i.chzbgr.com/full/5160709120/hE028E303/building-a-better-bunhouse.jpg",
+        ImageUrl = Links.STATUS_BUN,
         Thumbnail = embedThumbnail,
         Footer = embedFooter,
         Color = DiscordColor.SpringGreen,
