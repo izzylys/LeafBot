@@ -88,7 +88,7 @@ namespace LeafBot.Commands
           result += ", ";
         }
       }
-      await ctx.RespondAsync($"{ctx.Member.Mention}, you will queue for {result}. {Phrases.COMMANDING_PHRASES[random.Next(Phrases.COMMANDING_PHRASES.Length)]}!");
+      await ctx.RespondAsync($"{ctx.Member.Mention}, you will queue for {result}. {Strings.COMMANDING_STRINGS[random.Next(Strings.COMMANDING_STRINGS.Length)]}!");
     }
   }
 }

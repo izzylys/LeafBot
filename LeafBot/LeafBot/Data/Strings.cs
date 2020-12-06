@@ -4,9 +4,9 @@ using System.Text;
 
 namespace LeafBot.Data
 {
-  public class Phrases
+  public class Strings
   {
-    public static string[ ] COMMANDING_PHRASES =
+    public static string[ ] COMMANDING_STRINGS =
     {
       "LeafBot commands it",
       "Do it for the buns",
@@ -19,7 +19,7 @@ namespace LeafBot.Data
       "This is the word of the LeafBot"
     };
 
-    public static string[] DELIVERED_PHRASES =
+    public static string[] DELIVERED_STRINGS =
     {
       "digitally delivered",
       "blessed upon you",
