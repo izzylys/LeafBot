@@ -34,7 +34,7 @@ namespace LeafBot.Commands
         Footer = embedFooter,
         Color = DiscordColor.SpringGreen,
       };
-      embed.AddField("Version", "0.1", true);
+      embed.AddField("Version", Program.VERSION, true);
       embed.AddField("DSharp Version", ctx.Client.VersionString, true);
       embed.AddField("Ping", ctx.Client.Ping.ToString(), true);
       embed.AddField("Bunnies served", Stats.BunniesServed.ToString(), true);
