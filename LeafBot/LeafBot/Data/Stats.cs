@@ -1,5 +1,11 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
+
+using DSharpPlus;
+
+using Microsoft.Extensions.Logging;
+
 using Newtonsoft.Json.Linq;
 
 namespace LeafBot.Data
@@ -34,6 +40,56 @@ namespace LeafBot.Data
         BunniesServed = s.bunnies_served;
         EddieShowerCount = s.eddie_shower_count;
       }
+    }
+
+    public static async void Save(DiscordClient client = null)
+    {
+      var storePath = @"Data\stats_store.json";
+      var backupPath = @"Data\stats_store_backup.json";
+
+      // backup the store first to avoid corruption if something goes bang
+      try
+      {
+        using (FileStream store = File.Open(storePath, FileMode.Open))
+        using (FileStream backup = File.Open(backupPath, FileMode.Create))
+        {
+          await store.CopyToAsync(backup);
+        }
+      }
+      catch (Exception ex)
+      {
+        client?.Logger.LogError(Program.BotEventId, $"Could not backup stats store: {ex.GetType()}: {ex.Message}", DateTime.Now);
+        return;
+      }
+
+      // write the state to the store
+      try
+      {
+        using (StreamWriter sw = new StreamWriter(storePath))
+        {
+          await sw.WriteAsync($"{{\"start_time\": \"{Stats.StartTime}\",\"bunnies_served\": {Stats.BunniesServed},\"eddie_shower_count\": {Stats.EddieShowerCount}, \"pc_name\": \"{Stats.PCName}\"}}");
+        }
+
+      }
+      catch (Exception ex)
+      {
+        client?.Logger.LogError(Program.BotEventId, $"Could not save stats to local store: {ex.GetType()}: {ex.Message}", DateTime.Now);
+        return;
+      }
+
+      // delete the backup 
+      try
+      {
+        await Task.Run(() => File.Delete(backupPath));
+      }
+      catch (Exception ex)
+      {
+        client?.Logger.LogError(Program.BotEventId, $"Could not delete stats backup: {ex.GetType()}: {ex.Message}", DateTime.Now);
+        return;
+      }
+
+      client?.Logger.LogInformation(Program.BotEventId, "Successfully saved stats to the local store", DateTime.Now);
+      return;
     }
   }
 }

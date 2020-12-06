@@ -18,6 +18,8 @@ namespace LeafBot
   {
     public const string VERSION = "0.5";
 
+    public static EventId BotEventId = new EventId(420, "LeafBot");
+
     public DiscordClient Client { get; set; }
     public CommandsNextExtension Commands { get; set; }
     private Timer SaveTimer;
@@ -118,7 +120,7 @@ namespace LeafBot
 
     private void ConfigureCommands(ConfigJson config)
     {
-      Client.Logger.LogInformation(StaticEvents.BotEventId, $"Setting up commands...");
+      Client.Logger.LogInformation(Program.BotEventId, $"Setting up commands...");
       var ccfg = new CommandsNextConfiguration()
       {
         StringPrefixes = config.CommandPrefix,
@@ -140,7 +142,7 @@ namespace LeafBot
 
     private void ConfigureEvents()
     {
-      Client.Logger.LogInformation(StaticEvents.BotEventId, "Setting up events...");
+      Client.Logger.LogInformation(Program.BotEventId, "Setting up events...");
       Client.Ready += StaticEvents.Client_Ready;
       Client.ClientErrored += StaticEvents.Client_ClientError;
     }

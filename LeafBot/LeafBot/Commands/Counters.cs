@@ -19,6 +19,10 @@ namespace LeafBot.Commands
       // Increment stat
       Stats.EddieShowerCount++;
 
+      // I mean this save is a bit redundant because the save function is on a timer,
+      // but hopes for the moment while leafbot sometimes gets closed before the backup occurs
+      Stats.Save(ctx.Client);
+
       await ctx.Channel.SendMessageAsync($"Eddie has stopped playing to go shower {Stats.EddieShowerCount} times {DiscordEmoji.FromName(ctx.Client, ":shower:")}" +
         $"{Environment.NewLine}{Formatter.Italic("(he must be hella stanky)")}");
     }
