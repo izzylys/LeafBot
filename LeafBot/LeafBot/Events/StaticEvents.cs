@@ -47,7 +47,7 @@ namespace LeafBot.Events
     public static async Task Commands_CommandErrored(CommandsNextExtension sender, CommandErrorEventArgs e)
     {
       e.Context.Client.Logger.LogError(
-        BotEventId, 
+        BotEventId,
         "{0} tried executing '{1}' but it errored: {2}: {3}",
         e.Context.User.Username,
         e.Command?.QualifiedName ?? "<unknown command>",
@@ -75,13 +75,11 @@ namespace LeafBot.Events
     {
       client.Logger.LogInformation("Save timer elapsed. Attempting to save stats to local store", DateTime.Now);
 
-      var storePath = @"Data\stats_store.json";
-      var backupPath = @"Data\stats_store_backup.json";
-
       // backup the store first to avoid corruption if something goes bang
+      var backupPath = Path.Combine(Stats.BasePath, @"Data\stats_store_backup.json");
       try
       {
-        using(FileStream store = File.Open(storePath, FileMode.Open))
+        using(FileStream store = File.Open(Stats.StorePath, FileMode.Open))
         using(FileStream backup = File.Open(backupPath, FileMode.Create))
         {
           await store.CopyToAsync(backup);
@@ -96,7 +94,7 @@ namespace LeafBot.Events
       // write the state to the store
       try
       {
-        using(StreamWriter sw = new StreamWriter(storePath))
+        using(StreamWriter sw = new StreamWriter(Stats.StorePath))
         {
           await sw.WriteAsync($"{{\"start_time\": \"{Stats.StartTime}\",\"bunnies_served\": {Stats.BunniesServed}, \"pc_name\": \"{Stats.PCName}\"}}");
         }
