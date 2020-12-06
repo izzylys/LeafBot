@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace LeafBot.Data
@@ -15,9 +12,11 @@ namespace LeafBot.Data
 
     public async static void Initialise()
     {
+      // save session stats
       StartTime = DateTime.Now;
       PCName = Environment.MachineName;
 
+      // check if store exists and if not, create it
       var path = @"Data\stats_store.json";
       if (!File.Exists(path))
       {
@@ -25,6 +24,7 @@ namespace LeafBot.Data
         return;
       }
 
+      // get bunny count from store
       using(StreamReader file = File.OpenText(path))
       {
         var json = await file.ReadToEndAsync();
