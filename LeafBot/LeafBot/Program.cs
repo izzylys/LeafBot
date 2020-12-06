@@ -15,7 +15,7 @@ namespace LeafBot
 {
   class Program
   {
-    public const string VERSION = "1.0";
+    public const string VERSION = "0.5";
 
     public DiscordClient Client { get; set; }
     public CommandsNextExtension Commands { get; set; }
