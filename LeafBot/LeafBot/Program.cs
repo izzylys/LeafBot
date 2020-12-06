@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
@@ -21,12 +22,13 @@ namespace LeafBot
     public DiscordClient Client { get; set; }
     public CommandsNextExtension Commands { get; set; }
     private Timer SaveTimer;
-    private static string configPath = "config.json";
+    private static string configPath;
 
     static void Main(string[ ] args)
     {
       // initialise bot stats
       Stats.Initialise();
+      configPath = Path.Combine(Stats.BasePath, "config.json");
 
       // pass execution through async method
       var program = new Program();
