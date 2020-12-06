@@ -9,6 +9,7 @@ namespace LeafBot.Data
     public static DateTime StartTime;
     public static string PCName;
     public static int BunniesServed;
+    public static int EddieShowerCount;
 
     public static async void Initialise()
     {
@@ -31,6 +32,7 @@ namespace LeafBot.Data
         dynamic s = JObject.Parse(json);
 
         BunniesServed = s.bunnies_served;
+        EddieShowerCount = s.eddie_shower_count;
       }
     }
   }

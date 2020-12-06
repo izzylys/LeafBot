@@ -98,7 +98,7 @@ namespace LeafBot.Events
       {
         using(StreamWriter sw = new StreamWriter(storePath))
         {
-          await sw.WriteAsync($"{{\"start_time\": \"{Stats.StartTime}\",\"bunnies_served\": {Stats.BunniesServed}, \"pc_name\": \"{Stats.PCName}\"}}");
+          await sw.WriteAsync($"{{\"start_time\": \"{Stats.StartTime}\",\"bunnies_served\": {Stats.BunniesServed},\"eddie_shower_count\": {Stats.EddieShowerCount}, \"pc_name\": \"{Stats.PCName}\"}}");
         }
 
       }
