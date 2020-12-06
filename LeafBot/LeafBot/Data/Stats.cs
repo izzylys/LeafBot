@@ -21,6 +21,10 @@ namespace LeafBot.Data
       var path = @"Data\stats_store.json";
       if (!File.Exists(path))
       {
+        if (!Directory.Exists("Data"))
+        {
+          Directory.CreateDirectory("Data");
+        }
         File.Create(path);
         return;
       }
