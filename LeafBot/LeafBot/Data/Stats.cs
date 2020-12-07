@@ -17,22 +17,28 @@ namespace LeafBot.Data
     public static int BunniesServed;
     public static int EddieShowerCount;
 
+    public static string FilePath { get; private set; }
+
     public static async void Initialise()
     {
       // save session stats
       StartTime = DateTime.Now;
       PCName = Environment.MachineName;
 
-      // check if store exists and if not, create it
-      var path = @"Data\stats_store.json";
-      if (!File.Exists(path))
+      FilePath = Path.Combine(Program.DataPath, "stats_store.json");
+
+      if (!File.Exists(FilePath))
       {
-        CreateStatsFile(path);
+        if (!Directory.Exists(Path.GetDirectoryName(FilePath)))
+        {
+          Directory.CreateDirectory(Path.GetDirectoryName(FilePath));
+        }
+
+        CreateStatsFile(FilePath);
         return;
       }
 
-      // get stats from store
-      using(StreamReader file = File.OpenText(path))
+      using(StreamReader file = File.OpenText(FilePath))
       {
         var json = await file.ReadToEndAsync();
         dynamic s = JObject.Parse(json);
@@ -60,13 +66,12 @@ namespace LeafBot.Data
 
     public static async void Save(DiscordClient client = null)
     {
-      var storePath = @"Data\stats_store.json";
-      var backupPath = @"Data\stats_store_backup.json";
+      var backupPath = Path.Combine(Program.DataPath, "stats_store_backup.json");
 
       // backup the store first to avoid corruption if something goes bang
       try
       {
-        using (FileStream store = File.Open(storePath, FileMode.Open))
+        using (FileStream store = File.Open(FilePath, FileMode.Open))
         using (FileStream backup = File.Open(backupPath, FileMode.Create))
         {
           await store.CopyToAsync(backup);
@@ -81,7 +86,7 @@ namespace LeafBot.Data
       // write the state to the store
       try
       {
-        using (StreamWriter sw = new StreamWriter(storePath))
+        using (StreamWriter sw = new StreamWriter(FilePath))
         {
           await sw.WriteAsync(
             $"{{" +
