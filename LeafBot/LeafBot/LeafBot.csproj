@@ -11,4 +11,8 @@
     <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-rc1" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /y &quot;$(ProjectDir)config.json&quot; &quot;$(TargetDir)&quot;" />
+  </Target>
+
 </Project>
