@@ -2,14 +2,18 @@
 using System.IO;
 using System.Threading.Tasks;
 using System.Timers;
+
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Exceptions;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
-using LeafBot.Data;
+
 using Microsoft.Extensions.Logging;
+
 using Newtonsoft.Json;
+
+using LeafBot.Data;
 
 namespace LeafBot.Events
 {
@@ -75,13 +79,12 @@ namespace LeafBot.Events
     {
       client.Logger.LogInformation("Save timer elapsed. Attempting to save stats to local store", DateTime.Now);
 
-      var storePath = @"Data\stats_store.json";
-      var backupPath = @"Data\stats_store_backup.json";
+      var backupPath = Path.Combine(Program.DataPath, "stats_store_backup.json");
 
       // backup the store first to avoid corruption if something goes bang
       try
       {
-        using(FileStream store = File.Open(storePath, FileMode.Open))
+        using(FileStream store = File.Open(Stats.FilePath, FileMode.Open))
         using(FileStream backup = File.Open(backupPath, FileMode.Create))
         {
           await store.CopyToAsync(backup);
@@ -96,7 +99,7 @@ namespace LeafBot.Events
       // write the state to the store
       try
       {
-        using(StreamWriter sw = new StreamWriter(storePath))
+        using(StreamWriter sw = new StreamWriter(Stats.FilePath))
         {
           await sw.WriteAsync($"{{\"start_time\": \"{Stats.StartTime}\",\"bunnies_served\": {Stats.BunniesServed}, \"pc_name\": \"{Stats.PCName}\"}}");
         }

@@ -18,13 +18,21 @@ namespace LeafBot
   {
     public const string VERSION = "0.5";
 
+    public static string BasePath { get; private set; }
+    public static string DataPath { get; private set; }
+
     public DiscordClient Client { get; set; }
     public CommandsNextExtension Commands { get; set; }
     private Timer SaveTimer;
-    private static string configPath = "config.json";
+    private static string configPath;
 
     static void Main(string[ ] args)
     {
+      // Setup all our bot's paths
+      BasePath = AppDomain.CurrentDomain.BaseDirectory;
+      DataPath = Path.Combine(BasePath, "Data");
+      configPath = Path.Combine(BasePath, "config.json");
+
       // initialise bot stats
       Stats.Initialise();
 

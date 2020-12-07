@@ -13,23 +13,27 @@ namespace LeafBot.Data
     public static string PCName;
     public static int BunniesServed;
 
+    public static string FilePath { get; private set; }
+
     public async static void Initialise()
     {
       StartTime = DateTime.Now;
       PCName = Environment.MachineName;
 
-      var path = @"Data\stats_store.json";
-      if (!File.Exists(path))
+      FilePath = Path.Combine(Program.DataPath, "stats_store.json");
+
+      if (!File.Exists(FilePath))
       {
-        if (!Directory.Exists("Data"))
+        if (!Directory.Exists(Path.GetDirectoryName(FilePath)))
         {
-          Directory.CreateDirectory("Data");
+          Directory.CreateDirectory(Path.GetDirectoryName(FilePath));
         }
-        File.Create(path);
+
+        File.Create(FilePath);
         return;
       }
 
-      using(StreamReader file = File.OpenText(path))
+      using(StreamReader file = File.OpenText(FilePath))
       {
         var json = await file.ReadToEndAsync();
         dynamic s = JObject.Parse(json);
