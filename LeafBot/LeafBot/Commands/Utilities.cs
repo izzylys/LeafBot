@@ -45,5 +45,22 @@ namespace LeafBot.Commands
 
       await ctx.Channel.SendMessageAsync(embed: embed);
     }
+
+    [Command("commands")]
+    public async Task ListCommands(CommandContext ctx)
+    {
+      var embed = new DiscordEmbedBuilder
+      {
+        Title = $"LeafBot commands ",
+        Color = DiscordColor.SpringGreen,
+      };
+
+    }
+
+    [Command("about")]
+    public async Task About(CommandContext ctx)
+    {
+
+    }
   }
 }

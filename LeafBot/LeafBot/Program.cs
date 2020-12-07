@@ -136,6 +136,8 @@ namespace LeafBot
       Commands.RegisterCommands<Commands.Utilities>();
       Commands.RegisterCommands<Games>();
       Commands.RegisterCommands<Searches>();
+
+      Commands.SetHelpFormatter<HelpFormatter>();
     }
 
     private void ConfigureEvents()
