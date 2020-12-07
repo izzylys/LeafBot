@@ -19,18 +19,16 @@ namespace LeafBot.Events
 {
   public static class StaticEvents
   {
-    public static EventId BotEventId = new EventId(420, "LeafBot");
-
     public static Task Client_Ready(DiscordClient sender, ReadyEventArgs e)
     {
-      sender.Logger.LogInformation(BotEventId, "Client is ready to process events.");
+      sender.Logger.LogInformation(Program.BotEventId, "Client is ready to process events.");
 
       return Task.CompletedTask;
     }
 
     public static Task Client_ClientError(DiscordClient sender, ClientErrorEventArgs e)
     {
-      sender.Logger.LogError(BotEventId, e.Exception, $"Exception occurred: {e.Exception.Message}");
+      sender.Logger.LogError(Program.BotEventId, e.Exception, $"Exception occurred: {e.Exception.Message}");
 
       return Task.CompletedTask;
     }
@@ -38,7 +36,7 @@ namespace LeafBot.Events
     public static Task Commands_CommandExecuted(CommandsNextExtension sender, CommandExecutionEventArgs e)
     {
       e.Context.Client.Logger.LogInformation(
-        BotEventId,
+        Program.BotEventId,
         "{0} successfully executed '{1}' {2}",
         e.Context.User.Username,
         e.Command.QualifiedName,
@@ -51,7 +49,7 @@ namespace LeafBot.Events
     public static async Task Commands_CommandErrored(CommandsNextExtension sender, CommandErrorEventArgs e)
     {
       e.Context.Client.Logger.LogError(
-        BotEventId, 
+        Program.BotEventId, 
         "{0} tried executing '{1}' but it errored: {2}: {3}",
         e.Context.User.Username,
         e.Command?.QualifiedName ?? "<unknown command>",
@@ -68,7 +66,7 @@ namespace LeafBot.Events
         {
           Title = "i'm sorry, i don't know that command",
           Description = $"{emoji} please try a different command",
-          ImageUrl = @"https://user-images.githubusercontent.com/7717434/101267251-8eeff780-374e-11eb-9885-a8236b882bff.jpg",
+          ImageUrl = Links.COMMAND_NOT_FOUND_BUN,
           Color = DiscordColor.DarkRed,
         };
         await e.Context.RespondAsync("", embed : embed);
@@ -79,41 +77,8 @@ namespace LeafBot.Events
     {
       client.Logger.LogInformation("Save timer elapsed. Attempting to save stats to local store", DateTime.Now);
 
-      var backupPath = Path.Combine(Program.DataPath, "stats_store_backup.json");
-
-      // backup the store first to avoid corruption if something goes bang
-      try
-      {
-        using(FileStream store = File.Open(Stats.FilePath, FileMode.Open))
-        using(FileStream backup = File.Open(backupPath, FileMode.Create))
-        {
-          await store.CopyToAsync(backup);
-        }
-      }
-      catch (Exception ex)
-      {
-        client.Logger.LogError(BotEventId, $"Could not backup stats store: {ex.GetType()}: {ex.Message}", DateTime.Now);
-        return;
-      }
-
-      // write the state to the store
-      try
-      {
-        using(StreamWriter sw = new StreamWriter(Stats.FilePath))
-        {
-          await sw.WriteAsync($"{{\"start_time\": \"{Stats.StartTime}\",\"bunnies_served\": {Stats.BunniesServed}, \"pc_name\": \"{Stats.PCName}\"}}");
-        }
-
-      }
-      catch (Exception ex)
-      {
-        client.Logger.LogError(BotEventId, $"Could not save state to local store: {ex.GetType()}: {ex.Message}", DateTime.Now);
-        return;
-      }
-
-      // delete the backup 
-      await Task.Run(() => File.Delete(backupPath));
-      client.Logger.LogInformation(BotEventId, "Successfully saved stats to the local store", DateTime.Now);
+      // Save our stats object to file
+      Stats.Save(client);
     }
 
   }

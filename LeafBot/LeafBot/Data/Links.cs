@@ -5,6 +5,8 @@
     public static string STATUS_BUN = "https://i.chzbgr.com/full/5160709120/hE028E303/building-a-better-bunhouse.jpg";
     public static string STATUS_THUMBNAIL_BUN = "https://user-images.githubusercontent.com/7717434/101261156-06ad2a80-372d-11eb-9053-847da44e5181.jpg";
 
+    public static string COMMAND_NOT_FOUND_BUN = "https://user-images.githubusercontent.com/7717434/101267251-8eeff780-374e-11eb-9885-a8236b882bff.jpg";
+
     public static string URBAN_DICTIONARY_ICON = "http://i.imgur.com/nwERwQE.jpg";
 
     // sleepy bunnies
@@ -21,7 +23,6 @@
       "https://user-images.githubusercontent.com/7717434/101266434-cbb7f080-3746-11eb-9fca-bb26063adfeb.jpg",
       "https://user-images.githubusercontent.com/7717434/101266443-dd00fd00-3746-11eb-8933-79473cfdb053.jpg",
       "https://user-images.githubusercontent.com/7717434/101266584-f22a5b80-3747-11eb-8d52-a0f5e6db8023.jpg",
-
     };
 
     public static string[ ] CURIOUS_BUNS = {

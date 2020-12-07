@@ -21,6 +21,8 @@ namespace LeafBot
     public static string BasePath { get; private set; }
     public static string DataPath { get; private set; }
 
+    public static EventId BotEventId { get; private set; } = new EventId(420, "LeafBot");
+
     public DiscordClient Client { get; set; }
     public CommandsNextExtension Commands { get; set; }
     private Timer SaveTimer;
@@ -55,8 +57,7 @@ namespace LeafBot
       await Client.ConnectAsync();
 
       // start the save timer to backup state every hour
-      // TODO: read stats from file to initialise on startup
-      SaveTimer = new Timer(1000) { AutoReset = true, Enabled = true };
+      SaveTimer = new Timer(60 * 60 * 1000) { AutoReset = true, Enabled = true };
       SaveTimer.Elapsed += (object sender, ElapsedEventArgs e) => StaticEvents.SaveTimer_Elapsed(sender, e, Client);
 
       // prevent premature quitting
@@ -127,7 +128,7 @@ namespace LeafBot
 
     private void ConfigureCommands(ConfigJson config)
     {
-      Client.Logger.LogInformation(StaticEvents.BotEventId, $"Setting up commands...");
+      Client.Logger.LogInformation(Program.BotEventId, $"Setting up commands...");
       var ccfg = new CommandsNextConfiguration()
       {
         StringPrefixes = config.CommandPrefix,
@@ -144,11 +145,12 @@ namespace LeafBot
       Commands.RegisterCommands<Commands.Utilities>();
       Commands.RegisterCommands<Games>();
       Commands.RegisterCommands<Searches>();
+      Commands.RegisterCommands<Counters>();
     }
 
     private void ConfigureEvents()
     {
-      Client.Logger.LogInformation(StaticEvents.BotEventId, "Setting up events...");
+      Client.Logger.LogInformation(Program.BotEventId, "Setting up events...");
       Client.Ready += StaticEvents.Client_Ready;
       Client.ClientErrored += StaticEvents.Client_ClientError;
     }
