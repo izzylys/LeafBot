@@ -10,6 +10,7 @@ using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 using Newtonsoft.Json;
 
@@ -22,6 +23,9 @@ namespace LeafBot.Events
     public static Task Client_Ready(DiscordClient sender, ReadyEventArgs e)
     {
       sender.Logger.LogInformation(Program.BotEventId, "Client is ready to process events.");
+
+      // Set the bot game status
+      sender.UpdateStatusAsync(new DSharpPlus.Entities.DiscordActivity("with bunnies | !help"), DSharpPlus.Entities.UserStatus.Online, null);
 
       return Task.CompletedTask;
     }
