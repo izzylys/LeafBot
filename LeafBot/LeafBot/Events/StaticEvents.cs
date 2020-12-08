@@ -24,9 +24,6 @@ namespace LeafBot.Events
     {
       sender.Logger.LogInformation(Program.BotEventId, "Client is ready to process events.");
 
-      // Set the bot game status
-      sender.UpdateStatusAsync(new DSharpPlus.Entities.DiscordActivity("with bunnies | !help"), DSharpPlus.Entities.UserStatus.Online, null);
-
       return Task.CompletedTask;
     }
 
@@ -83,6 +80,20 @@ namespace LeafBot.Events
 
       // Save our stats object to file
       await Stats.Save(client);
+    }
+
+    public static async void PresenceTimer_Elapsed(DiscordClient client)
+    {
+      try
+      {
+        // Set the bot game status
+        await client.UpdateStatusAsync(new DSharpPlus.Entities.DiscordActivity("with bunnies | !help"), DSharpPlus.Entities.UserStatus.Online, null);
+        client.Logger.LogInformation("Presence updated", DateTime.Now);
+      }
+      catch (Exception ex)
+      {
+        client.Logger.LogError($"An error occured while updating presence ({ex.GetType()}: {ex.Message})", DateTime.Now);
+      }
     }
 
   }

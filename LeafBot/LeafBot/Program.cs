@@ -25,7 +25,7 @@ namespace LeafBot
 
     public DiscordClient Client { get; set; }
     public CommandsNextExtension Commands { get; set; }
-    private Timer SaveTimer;
+    private Timer SaveTimer, PresenceTimer;
     private static string configPath;
 
     static void Main(string[ ] args)
@@ -59,6 +59,10 @@ namespace LeafBot
       // start the save timer to backup state every hour
       SaveTimer = new Timer(60 * 60 * 1000) { AutoReset = true, Enabled = true };
       SaveTimer.Elapsed += (object sender, ElapsedEventArgs e) => StaticEvents.SaveTimer_Elapsed(sender, e, Client);
+
+      // Start a timer to update the bot's status every hour
+      PresenceTimer = new Timer(60 * 60 * 1000) { AutoReset = true, Enabled = true };
+      PresenceTimer.Elapsed += (object sender, ElapsedEventArgs e) => StaticEvents.PresenceTimer_Elapsed(Client);
 
       // prevent premature quitting
       await Task.Delay(-1);
