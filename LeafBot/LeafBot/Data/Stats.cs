@@ -64,7 +64,7 @@ namespace LeafBot.Data
       }
     }
 
-    public static async void Save(DiscordClient client = null)
+    public static async Task Save(DiscordClient client = null)
     {
       var backupPath = Path.Combine(Program.DataPath, "stats_store_backup.json");
 

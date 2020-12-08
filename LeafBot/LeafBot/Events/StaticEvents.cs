@@ -82,7 +82,7 @@ namespace LeafBot.Events
       client.Logger.LogInformation("Save timer elapsed. Attempting to save stats to local store", DateTime.Now);
 
       // Save our stats object to file
-      Stats.Save(client);
+      await Stats.Save(client);
     }
 
   }
