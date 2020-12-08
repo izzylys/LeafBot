@@ -21,6 +21,9 @@ namespace LeafBot.Events
     {
       sender.Logger.LogInformation(BotEventId, "Client is ready to process events.");
 
+      // Set the bot game status
+      sender.UpdateStatusAsync(new DSharpPlus.Entities.DiscordActivity("with bunnies | !help"), DSharpPlus.Entities.UserStatus.Online, null);
+
       return Task.CompletedTask;
     }
 
