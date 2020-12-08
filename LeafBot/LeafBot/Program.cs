@@ -138,15 +138,18 @@ namespace LeafBot
       };
       Commands = Client.UseCommandsNext(ccfg);
 
+      // Add event callbacks
       Commands.CommandExecuted += StaticEvents.Commands_CommandExecuted;
       Commands.CommandErrored += StaticEvents.Commands_CommandErrored;
 
+      // Register commands
       Commands.RegisterCommands<Bunnies>();
       Commands.RegisterCommands<Commands.Utilities>();
       Commands.RegisterCommands<Games>();
       Commands.RegisterCommands<Searches>();
       Commands.RegisterCommands<Counters>();
 
+      // Set custom helpformatter
       Commands.SetHelpFormatter<HelpFormatter>();
     }
 
