@@ -11,7 +11,7 @@ namespace LeafBot.Data
       "LeafBot commands it",
       "Do it for the buns",
       "This is the way",
-      "May the lettuce be with",
+      "May the lettuce be with you",
       "The bunnies command it",
       "You must walk this path",
       "Do it",
