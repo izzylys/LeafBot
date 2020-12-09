@@ -79,6 +79,11 @@ namespace LeafBot.Commands
       DiscordEmoji utilityEmoji = DiscordEmoji.FromName(ctx.Client, ":gear:");
       DiscordEmoji helpEmoji = DiscordEmoji.FromName(ctx.Client, ":books:");
 
+      // So there is a way to list all commands attached to the client's CommandNext 
+      // but that list contains ALL aliases of commands so I am just going to add them manually
+      // here unless we come up with a better way to do this. Also the !help command with 
+      // no arguments basically does this but I wanted something with catagories
+
       embed.AddField($"Bunnies {rabbitEmoji}",
         "-> sleepy" + Environment.NewLine +
         "-> curious" + Environment.NewLine +
@@ -88,7 +93,8 @@ namespace LeafBot.Commands
       embed.AddField($"Games {gamesEmoji}",
         "-> rollthedice" + Environment.NewLine +
         "-> coinflip" + Environment.NewLine +
-        "-> pickrole");
+        "-> pickrole" + Environment.NewLine +
+        "-> bunnyage");
       embed.AddField($"Searches {searchEmoji}",
         "-> wikipedia" + Environment.NewLine +
         "-> urbandictionary");
