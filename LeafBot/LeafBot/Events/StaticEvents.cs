@@ -77,6 +77,10 @@ namespace LeafBot.Events
           ImageUrl = Links.COMMAND_NOT_FOUND_BUN,
           Color = DiscordColor.DarkRed,
         };
+
+        // Bunny pic so bunny been served
+        Stats.BunniesServed++;
+
         await e.Context.RespondAsync("", embed : embed);
       }
     }

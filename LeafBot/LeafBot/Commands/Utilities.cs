@@ -51,7 +51,10 @@ namespace LeafBot.Commands
       embed.AddField("Uptime", $"{uptime.Days} Days {uptime.Hours}:{uptime.Minutes}:{uptime.Seconds} Hours");
       embed.AddField("Connected to", ctx.Guild.Name.ToString(), true);
       embed.AddField("Running on", Stats.PCName, true);
-      
+
+      // Update bunnies served stat (there is a pic of a bunny in the status in bed silly)
+      Stats.BunniesServed++;
+
       await ctx.Channel.SendMessageAsync(embed: embed);
     }
 
