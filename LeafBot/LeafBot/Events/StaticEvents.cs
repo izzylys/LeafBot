@@ -24,6 +24,9 @@ namespace LeafBot.Events
     {
       sender.Logger.LogInformation(Program.BotEventId, "Client is ready to process events.");
 
+      // Update presence
+      StaticEvents.PresenceTimer_Elapsed(sender);
+
       return Task.CompletedTask;
     }
 
@@ -102,7 +105,7 @@ namespace LeafBot.Events
       try
       {
         // Set the bot game status
-        await client.UpdateStatusAsync(new DSharpPlus.Entities.DiscordActivity("with bunnies | !help"), DSharpPlus.Entities.UserStatus.Online, null);
+        await client.UpdateStatusAsync(new DSharpPlus.Entities.DiscordActivity("with bunnies | !about"), DSharpPlus.Entities.UserStatus.Online, null);
         client.Logger.LogInformation("Presence updated", DateTime.Now);
       }
       catch (Exception ex)
