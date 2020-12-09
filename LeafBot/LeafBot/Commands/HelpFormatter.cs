@@ -47,6 +47,7 @@ namespace LeafBot.Commands
 
     public override BaseHelpFormatter WithSubcommands(IEnumerable<Command> subcommands)
     {
+      // NOTE: This assumes that the only command with subcommands is the main command !help, so if we ever add commands with subcommands this will have to change
       EmbedBuilder.AddField("Help", $"These are all the commands that LeafBot can do! For help and/or more info about LeafBot try {Formatter.InlineCode("!about")}.");
       EmbedBuilder.AddField("Commands", string.Join(", ", subcommands.Select(xc => Formatter.InlineCode(xc.Name))));
 

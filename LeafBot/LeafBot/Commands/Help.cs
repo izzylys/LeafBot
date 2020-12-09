@@ -31,7 +31,7 @@ namespace LeafBot.Commands
 
       embed.AddField($"Code {DiscordEmoji.FromName(ctx.Client, ":wrench:")}", "My code (whatever that is) can be found on " + Formatter.MaskedUrl("github", new Uri("https://github.com/izzylys/LeafBot"), "click me, you know you want to") +
         $". You can also submit any feature ideas, suggestions, feelings or bugs on the {Formatter.MaskedUrl("issues page", new Uri("https://github.com/izzylys/LeafBot/issues"))}.");
-      embed.AddField($"Help {DiscordEmoji.FromName(ctx.Client, ":books:")}", $"If you want to see a list of my commands, type {Formatter.InlineCode("!commands")}. For any information about a command type {Formatter.InlineCode("!help <command>")}");
+      embed.AddField($"Help {DiscordEmoji.FromName(ctx.Client, ":books:")}", $"If you want to see a list of my commands, type {Formatter.InlineCode("!commands")}. For any information about a specific command, type {Formatter.InlineCode("!help <command>")}");
       embed.AddField($"Have fun!", $"and don't forget to throw all your games (looking at you Eddie {DiscordEmoji.FromName(ctx.Client, ":see_no_evil:")})");
 
       await ctx.Channel.SendMessageAsync(embed: embed);
