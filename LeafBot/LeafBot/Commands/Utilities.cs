@@ -48,7 +48,7 @@ namespace LeafBot.Commands
       embed.AddField("Commands run", Stats.ExecutedCommands.ToString(), true);
       embed.AddField("Roles picked", Stats.RolesPicked.ToString(), true);
       embed.AddField("Command errors", Stats.CommandErrors == 0 ? $"{tadaEmoji} {Stats.CommandErrors.ToString()} {tadaEmoji}" : Stats.CommandErrors.ToString() + $" {sadEmoji}", true);
-      embed.AddField("Uptime", $"{uptime.Days} Days {uptime.Hours}:{uptime.Minutes}:{uptime.Seconds} Hours");
+      embed.AddField("Uptime", $"{uptime.Days} days {uptime.Hours} hours {uptime.Minutes} minutes {uptime.Seconds} seconds");
       embed.AddField("Connected to", ctx.Guild.Name.ToString(), true);
       embed.AddField("Running on", Stats.PCName, true);
 
@@ -73,6 +73,23 @@ namespace LeafBot.Commands
     public async Task About(CommandContext ctx)
     {
 
+    }
+
+    [Command("ping")]
+    [Description("Leafbot's ping (don't ping it too hard)")]
+    public async Task Ping(CommandContext ctx)
+    {
+      await ctx.Channel.SendMessageAsync($"{DiscordEmoji.FromName(ctx.Client, ":ping_pong:")} Pong! Ping: {ctx.Client.Ping}ms");
+    }
+
+    [Command("uptime")]
+    [Description("See how long leafbot has been awake for")]
+    public async Task Uptime(CommandContext ctx)
+    {
+      var uptime = (DateTime.Now - Stats.StartTime);
+      decimal upDays = uptime.Days;
+      decimal bunYears = Math.Round((upDays / 365) / 75, 6);
+      await ctx.Channel.SendMessageAsync($"LeafBot has been awake for {uptime.Days} days {uptime.Hours} hours {uptime.Minutes} minutes {uptime.Seconds} seconds (or {bunYears} bunny years)");
     }
 
     [Command("error")]
