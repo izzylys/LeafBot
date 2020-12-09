@@ -31,6 +31,7 @@ namespace LeafBot.Commands
     public async Task Curious(CommandContext ctx)
     {
       Stats.BunniesServed++;
+
       var embed = new DiscordEmbedBuilder
       {
         Color = DiscordColor.HotPink,
@@ -43,6 +44,8 @@ namespace LeafBot.Commands
     [Description("curses you with a photo of an angry bun")]
     public async Task Angry(CommandContext ctx)
     {
+      Stats.BunniesServed++;
+
       var embed = new DiscordEmbedBuilder
       {
         Color = DiscordColor.Red,
