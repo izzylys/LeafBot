@@ -2,42 +2,36 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using DSharpPlus;
+using DSharpPlus.Entities;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.CommandsNext.Entities;
 
 namespace LeafBot.Commands
 {
+  // Custom formatter for any help commands
   class HelpFormatter : BaseHelpFormatter
   {
-
-    private StringBuilder MessageBuilder { get; }
+    private DiscordEmbedBuilder EmbedBuilder { get; }
+    private DiscordEmoji HelpEmoji { get; }
 
     public HelpFormatter(CommandContext ctx) : base(ctx)
     {
+      this.EmbedBuilder = new DiscordEmbedBuilder();
+      this.HelpEmoji = DiscordEmoji.FromName(ctx.Client, ":books:");
 
-      this.MessageBuilder = new StringBuilder();
+      EmbedBuilder.Color = DiscordColor.SpringGreen;
     }
     public override BaseHelpFormatter WithCommand(Command command)
     {
-      this.MessageBuilder.Append("Command: ")
-   .AppendLine(Formatter.Bold(command.Name))
-   .AppendLine();
+      EmbedBuilder.Title = $"{HelpEmoji} '{command.Name}'";
 
+      EmbedBuilder.AddField("Description", Formatter.Italic(command.Description));
+      EmbedBuilder.AddField("Aliases", string.Join(", ", command.Aliases.Select(x => Formatter.InlineCode(x))));
 
-      this.MessageBuilder.Append("Description: ")
-          .AppendLine(command.Description)
-          .AppendLine();
-
-      if (command is CommandGroup)
-        this.MessageBuilder.AppendLine("This group has a standalone command.").AppendLine();
-
-      this.MessageBuilder.Append("Aliases: ")
-          .AppendLine(string.Join(", ", command.Aliases))
-          .AppendLine();
-
-
+      // Print arguments list
       foreach (var overload in command.Overloads)
       {
         if (overload.Arguments.Count == 0)
@@ -45,9 +39,7 @@ namespace LeafBot.Commands
           continue;
         }
 
-        this.MessageBuilder.Append($"[Overload {overload.Priority}] Arguments: ")
-        .AppendLine(string.Join(", ", overload.Arguments.Select(xarg => $"{xarg.Name} ({xarg.Type.Name})")))
-        .AppendLine();
+        EmbedBuilder.AddField("Arguments", string.Join(", ", overload.Arguments.Select(xarg => $"({xarg.Type.Name}) '{Formatter.Bold(Formatter.Underline(xarg.Name))}' - {xarg.Description}")));
       }
 
       return this;
@@ -55,16 +47,15 @@ namespace LeafBot.Commands
 
     public override BaseHelpFormatter WithSubcommands(IEnumerable<Command> subcommands)
     {
-      this.MessageBuilder.Append("Subcommands: ")
-    .AppendLine(string.Join(", ", subcommands.Select(xc => xc.Name)))
-    .AppendLine();
+      EmbedBuilder.AddField("Help", $"These are all the commands that LeafBot can do! For help and/or more info about LeafBot try {Formatter.InlineCode("!about")}.");
+      EmbedBuilder.AddField("Commands", string.Join(", ", subcommands.Select(xc => Formatter.InlineCode(xc.Name))));
 
       return this;
     }
 
     public override CommandHelpMessage Build()
     {
-      return new CommandHelpMessage(this.MessageBuilder.ToString().Replace("\r\n", "\n"));
+      return new CommandHelpMessage(string.Empty, EmbedBuilder.Build());
     }
 
   }
