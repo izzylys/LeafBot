@@ -64,17 +64,23 @@ namespace LeafBot.Commands
     }
 
     [Command("commands")]
+    [Description("Lists all the amazing commands that LeafBot can do")]
+    [Aliases("list", "command")]
     public async Task ListCommands(CommandContext ctx)
     {
       var embed = new DiscordEmbedBuilder
       {
         Title = $"LeafBot commands ",
-        Color = DiscordColor.SpringGreen
+        Color = DiscordColor.SpringGreen,
+        Footer = new DiscordEmbedBuilder.EmbedFooter
+        {
+          Text = $"Type '!help <command>' to get more info about a command"
+        }
       };
 
       DiscordEmoji rabbitEmoji = DiscordEmoji.FromName(ctx.Client, ":rabbit:");
       DiscordEmoji counterEmoji = DiscordEmoji.FromName(ctx.Client, ":slot_machine:");
-      DiscordEmoji gamesEmoji = DiscordEmoji.FromName(ctx.Client, ":video_game:");
+      DiscordEmoji gamesEmoji = DiscordEmoji.FromName(ctx.Client, ":joystick:");
       DiscordEmoji searchEmoji = DiscordEmoji.FromName(ctx.Client, ":mag:");
       DiscordEmoji utilityEmoji = DiscordEmoji.FromName(ctx.Client, ":gear:");
       DiscordEmoji helpEmoji = DiscordEmoji.FromName(ctx.Client, ":books:");
@@ -85,36 +91,55 @@ namespace LeafBot.Commands
       // no arguments basically does this but I wanted something with catagories
 
       embed.AddField($"Bunnies {rabbitEmoji}",
-        "-> sleepy" + Environment.NewLine +
-        "-> curious" + Environment.NewLine +
-        "-> angry");
+        $"-> {Formatter.InlineCode("sleepy")} {Environment.NewLine}" +
+        $"-> {Formatter.InlineCode("curious")} {Environment.NewLine}" +
+        $"-> {Formatter.InlineCode("angry")} {Environment.NewLine}", true);
       embed.AddField($"Counters {counterEmoji}",
-        "-> eddieshower");
+        $"-> {Formatter.InlineCode("eddieshower")} {Environment.NewLine}" +
+        $"-> {Formatter.InlineCode("buns")} {Environment.NewLine}", true);
       embed.AddField($"Games {gamesEmoji}",
-        "-> rollthedice" + Environment.NewLine +
-        "-> coinflip" + Environment.NewLine +
-        "-> pickrole" + Environment.NewLine +
-        "-> bunnyage");
+        $"-> {Formatter.InlineCode("rollthedice")} {Environment.NewLine}" +
+        $"-> {Formatter.InlineCode("coinflip")} {Environment.NewLine}" +
+        $"-> {Formatter.InlineCode("pickrole")} {Environment.NewLine}" +
+        $"-> {Formatter.InlineCode("bunnyage")} {Environment.NewLine}", true);
       embed.AddField($"Searches {searchEmoji}",
-        "-> wikipedia" + Environment.NewLine +
-        "-> urbandictionary");
+        $"-> {Formatter.InlineCode("wikipedia")} {Environment.NewLine}" +
+        $"-> {Formatter.InlineCode("urbandictionary")} {Environment.NewLine}", true);
       embed.AddField($"Utilities {utilityEmoji}",
-        "-> status" + Environment.NewLine +
-        "-> ping" + Environment.NewLine +
-        "-> uptime"); 
-      embed.AddField($"Utilities {helpEmoji}",
-         "-> help" + Environment.NewLine +
-         "-> about" + Environment.NewLine +
-         "-> commands");
+         $"-> {Formatter.InlineCode("ping")} {Environment.NewLine}" +
+         $"-> {Formatter.InlineCode("uptime")} {Environment.NewLine}" +
+         $"-> {Formatter.InlineCode("lasterror")} {Environment.NewLine}", true);
+      embed.AddField($"Help {helpEmoji}",
+         $"-> {Formatter.InlineCode("help")} {Environment.NewLine}" +
+         $"-> {Formatter.InlineCode("about")} {Environment.NewLine}" +
+         $"-> {Formatter.InlineCode("commands")} {Environment.NewLine}", true);
 
       await ctx.Channel.SendMessageAsync(embed: embed);
 
     }
 
     [Command("about")]
+    [Description("Who is this LeafBot I have heard so much about?")]
+    [Aliases("whoami", "newnumberwhodis", "whodis")]
     public async Task About(CommandContext ctx)
     {
+      DiscordEmoji emoji = DiscordEmoji.FromName(ctx.Client, ":leaves:");
+      var embed = new DiscordEmbedBuilder
+      {
+        Title = $"Heyya! I'm LeafBot {emoji}",
+        Color = DiscordColor.SpringGreen,
+        Description = $"Guardian of this discord server {DiscordEmoji.FromName(ctx.Client, ":shield:")}, protector of bunnies {DiscordEmoji.FromName(ctx.Client, ":rabbit:")} and back street dealer of cute animal pictures {DiscordEmoji.FromName(ctx.Client, ":otter:")}.",
+        Footer = new DiscordEmbedBuilder.EmbedFooter {
+          Text = "Brought to you with <3 by Kubi, Genghis & pals"
+        }, 
+      };
+      
+      embed.AddField($"Code {DiscordEmoji.FromName(ctx.Client, ":wrench:")}", "My code (whatever that is) can be found on " + Formatter.MaskedUrl("github", new Uri("https://github.com/izzylys/LeafBot"), "click me, you know you want to") + 
+        $". You can also submit any feature ideas, suggestions, feelings or bugs on the {Formatter.MaskedUrl("issues page", new Uri("https://github.com/izzylys/LeafBot/issues"))}.");
+      embed.AddField($"Help {DiscordEmoji.FromName(ctx.Client, ":books:")}", $"If you want to see a list of my commands, type {Formatter.InlineCode("!commands")}. For any information about a command type {Formatter.InlineCode("!help <command>")}");
+      embed.AddField($"Have fun!", $"and don't forget to throw all your games (looking at you Eddie {DiscordEmoji.FromName(ctx.Client, ":see_no_evil:")})");
 
+      await ctx.Channel.SendMessageAsync(embed: embed);
     }
 
     [Command("ping")]
