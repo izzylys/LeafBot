@@ -19,6 +19,7 @@ namespace LeafBot.Commands
       DiscordEmoji rabbitEmoji = DiscordEmoji.FromName(ctx.Client, ":rabbit2:");
       DiscordEmoji toolsEmoji = DiscordEmoji.FromName(ctx.Client, ":tools:");
       DiscordEmoji tadaEmoji = DiscordEmoji.FromName(ctx.Client, ":tada:");
+      DiscordEmoji sadEmoji = DiscordEmoji.FromName(ctx.Client, ":cry:");
 
       var embedThumbnail = new DiscordEmbedBuilder.EmbedThumbnail
       {
@@ -43,7 +44,7 @@ namespace LeafBot.Commands
       embed.AddField("Bunnies served", Stats.BunniesServed.ToString(), true);
       embed.AddField("Commands run", Stats.ExecutedCommands.ToString(), true);
       embed.AddField("Roles picked", Stats.RolesPicked.ToString(), true);
-      embed.AddField("Command error", Stats.CommandErrors == 0 ? $"{tadaEmoji} {Stats.CommandErrors.ToString()} {tadaEmoji}" : Stats.CommandErrors.ToString(), true);
+      embed.AddField("Command errors", Stats.CommandErrors == 0 ? $"{tadaEmoji} {Stats.CommandErrors.ToString()} {tadaEmoji}" : Stats.CommandErrors.ToString() + $" {sadEmoji}", true);
       embed.AddField("Uptime", (DateTime.Now - Stats.StartTime).ToString() + " hours");
       embed.AddField("Connected to", ctx.Guild.Name.ToString(), true);
       embed.AddField("Running on", Stats.PCName, true);
@@ -76,7 +77,7 @@ namespace LeafBot.Commands
       if (Stats.LastCommandException == null)
       {
         DiscordEmoji tadaEmoji = DiscordEmoji.FromName(ctx.Client, ":tada:");
-        await ctx.RespondAsync($"No errors! Yaaaay {tadaEmoji}! ");
+        await ctx.RespondAsync($"No errors! Yaaaay {tadaEmoji} ");
         return;
       }
 
@@ -88,7 +89,7 @@ namespace LeafBot.Commands
 
       var embed = new DiscordEmbedBuilder
       {
-        Title = $"{emoji} Last Error:",
+        Title = $"{emoji} Last Command Error {emoji}",
         Color = DiscordColor.DarkRed,
       };
       embed.AddField("Type", Formatter.Bold(type));
