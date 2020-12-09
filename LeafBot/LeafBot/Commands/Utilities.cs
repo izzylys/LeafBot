@@ -18,6 +18,7 @@ namespace LeafBot.Commands
     {
       DiscordEmoji rabbitEmoji = DiscordEmoji.FromName(ctx.Client, ":rabbit2:");
       DiscordEmoji toolsEmoji = DiscordEmoji.FromName(ctx.Client, ":tools:");
+      DiscordEmoji tadaEmoji = DiscordEmoji.FromName(ctx.Client, ":tada:");
 
       var embedThumbnail = new DiscordEmbedBuilder.EmbedThumbnail
       {
@@ -42,6 +43,7 @@ namespace LeafBot.Commands
       embed.AddField("Bunnies served", Stats.BunniesServed.ToString(), true);
       embed.AddField("Commands run", Stats.ExecutedCommands.ToString(), true);
       embed.AddField("Roles picked", Stats.RolesPicked.ToString(), true);
+      embed.AddField("Command error", Stats.CommandErrors == 0 ? $"{tadaEmoji} {Stats.CommandErrors.ToString()} {tadaEmoji}" : Stats.CommandErrors.ToString(), true);
       embed.AddField("Uptime", (DateTime.Now - Stats.StartTime).ToString() + " hours");
       embed.AddField("Connected to", ctx.Guild.Name.ToString(), true);
       embed.AddField("Running on", Stats.PCName, true);

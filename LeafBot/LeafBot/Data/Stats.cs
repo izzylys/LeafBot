@@ -18,6 +18,7 @@ namespace LeafBot.Data
     public static int EddieShowerCount;
     public static int ExecutedCommands;
     public static int RolesPicked;
+    public static int CommandErrors;
 
     // Store last command exception to display info using !error command
     public static Exception LastCommandException = null;
@@ -26,12 +27,14 @@ namespace LeafBot.Data
 
     public static async void Initialise()
     {
-      // save session stats
+      // init stats
       StartTime = DateTime.Now;
       PCName = Environment.MachineName;
-
+      CommandErrors = 0;
+      
       FilePath = Path.Combine(Program.DataPath, "stats_store.json");
 
+      // Create stats file if it doesn't already exist
       if (!File.Exists(FilePath))
       {
         if (!Directory.Exists(Path.GetDirectoryName(FilePath)))
@@ -43,6 +46,7 @@ namespace LeafBot.Data
         return;
       }
 
+      // Read stats from the stats file
       using(StreamReader file = File.OpenText(FilePath))
       {
         var json = await file.ReadToEndAsync();
