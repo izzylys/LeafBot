@@ -38,6 +38,9 @@ namespace LeafBot.Commands
         Footer = embedFooter,
         Color = DiscordColor.SpringGreen,
       };
+
+      var uptime = (DateTime.Now - Stats.StartTime);
+
       embed.AddField("Version", Program.VERSION, true);
       embed.AddField("DSharp Version", ctx.Client.VersionString, true);
       embed.AddField("Ping", ctx.Client.Ping.ToString(), true);
@@ -45,10 +48,10 @@ namespace LeafBot.Commands
       embed.AddField("Commands run", Stats.ExecutedCommands.ToString(), true);
       embed.AddField("Roles picked", Stats.RolesPicked.ToString(), true);
       embed.AddField("Command errors", Stats.CommandErrors == 0 ? $"{tadaEmoji} {Stats.CommandErrors.ToString()} {tadaEmoji}" : Stats.CommandErrors.ToString() + $" {sadEmoji}", true);
-      embed.AddField("Uptime", (DateTime.Now - Stats.StartTime).ToString() + " hours");
+      embed.AddField("Uptime", $"{uptime.Days} Days {uptime.Hours}:{uptime.Minutes}:{uptime.Seconds} Hours");
       embed.AddField("Connected to", ctx.Guild.Name.ToString(), true);
       embed.AddField("Running on", Stats.PCName, true);
-
+      
       await ctx.Channel.SendMessageAsync(embed: embed);
     }
 
