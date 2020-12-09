@@ -68,7 +68,7 @@ namespace LeafBot.Commands
 
     [Command("error")]
     [Description("Prints last command error details (oh nuuuu)")]
-    [Aliases("printerror", "lasterror")]
+    [Aliases("printerror", "lasterror", "exception")]
     public async Task LastCommandError(CommandContext ctx)
     {
       if (Stats.LastCommandException == null)
