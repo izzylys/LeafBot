@@ -61,9 +61,7 @@ namespace LeafBot.Events
         e.Exception.Message ?? "<no message>"
       );
 
-      // Save exception details to stats;
-      Stats.LastCommandException = e.Exception;
-      Stats.CommandErrors++;
+
 
       if (e.Exception is CommandNotFoundException ex)
       {
@@ -82,6 +80,12 @@ namespace LeafBot.Events
         Stats.BunniesServed++;
 
         await e.Context.RespondAsync("", embed : embed);
+      }
+      else
+      {
+        // Save exception details to stats for any none commandnotfound exceptions
+        Stats.LastCommandException = e.Exception;
+        Stats.CommandErrors++;
       }
     }
 
