@@ -157,7 +157,7 @@ namespace LeafBot.Commands
 
       var uptime = (DateTime.Now - Stats.StartTime);
       decimal upDays = uptime.Days;
-      decimal bunYears = Math.Round((upDays / 365) / 75, 6);
+      decimal bunYears = Math.Round((upDays / 365) * 7.5M, 6);
       await ctx.Channel.SendMessageAsync($"LeafBot has been awake for {uptime.Days} days {uptime.Hours} hours {uptime.Minutes} minutes {uptime.Seconds} seconds (or {bunYears} bunny years {rabbitEmoji})");
     }
 
