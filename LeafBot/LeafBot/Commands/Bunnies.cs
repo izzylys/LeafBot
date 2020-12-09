@@ -53,15 +53,5 @@ namespace LeafBot.Commands
       };
       await ctx.Channel.SendMessageAsync(embed: embed);
     }
-
-    [Command("buns")]
-    [Description("LeafBot promptly informs you of how many buns have been digitally liberated")]
-    [Aliases("buncount", "count")]
-    public async Task ServedBuns(CommandContext ctx)
-    {
-      DiscordEmoji emoji = DiscordEmoji.FromName(ctx.Client, ":rabbit:");
-
-      await ctx.Channel.SendMessageAsync($"LeafBot has {Strings.DELIVERED_STRINGS[rng.Next(Strings.DELIVERED_STRINGS.Length)]} {Stats.BunniesServed} bunnies {emoji}");
-    }
   }
 }
