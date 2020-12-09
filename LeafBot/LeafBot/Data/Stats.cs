@@ -19,6 +19,9 @@ namespace LeafBot.Data
     public static int ExecutedCommands;
     public static int RolesPicked;
 
+    // Store last command exception to display info using !error command
+    public static Exception LastCommandException = null;
+
     public static string FilePath { get; private set; }
 
     public static async void Initialise()

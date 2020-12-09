@@ -61,6 +61,9 @@ namespace LeafBot.Events
         e.Exception.Message ?? "<no message>"
       );
 
+      // Save exception details to stats;
+      Stats.LastCommandException = e.Exception;
+
       if (e.Exception is CommandNotFoundException ex)
       {
 

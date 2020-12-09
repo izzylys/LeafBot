@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
@@ -63,6 +64,36 @@ namespace LeafBot.Commands
     public async Task About(CommandContext ctx)
     {
 
+    }
+
+    [Command("error")]
+    [Description("Prints last command error details (oh nuuuu)")]
+    [Aliases("printerror", "lasterror")]
+    public async Task LastCommandError(CommandContext ctx)
+    {
+      if (Stats.LastCommandException == null)
+      {
+        DiscordEmoji tadaEmoji = DiscordEmoji.FromName(ctx.Client, ":tada:");
+        await ctx.RespondAsync($"No errors! Yaaaay {tadaEmoji}! ");
+        return;
+      }
+
+      DiscordEmoji emoji = DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:");
+
+      string type = Stats.LastCommandException.GetType().ToString();
+      string msg = Stats.LastCommandException.Message;
+      string stacktrace = Stats.LastCommandException.StackTrace;
+
+      var embed = new DiscordEmbedBuilder
+      {
+        Title = $"{emoji} Last Error:",
+        Color = DiscordColor.DarkRed,
+      };
+      embed.AddField("Type", Formatter.Bold(type));
+      embed.AddField("Message", Formatter.Italic(msg));
+      embed.AddField("Trace", Formatter.BlockCode(string.IsNullOrWhiteSpace(stacktrace) ? "No stacktrace attached" : stacktrace));
+
+      await ctx.Channel.SendMessageAsync(embed: embed);
     }
   }
 }
