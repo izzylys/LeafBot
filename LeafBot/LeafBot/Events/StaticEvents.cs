@@ -87,6 +87,7 @@ namespace LeafBot.Events
       else
       {
         // Save exception details to stats for any none commandnotfound exceptions
+        Stats.LastCommandToError = e.Command?.QualifiedName;
         Stats.LastCommandException = e.Exception;
         Stats.CommandErrors++;
       }

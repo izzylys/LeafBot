@@ -21,6 +21,7 @@ namespace LeafBot.Data
     public static int CommandErrors;
 
     // Store last command exception to display info using !error command
+    public static string LastCommandToError = "";
     public static Exception LastCommandException = null;
 
     public static string FilePath { get; private set; }

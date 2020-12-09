@@ -105,6 +105,7 @@ namespace LeafBot.Commands
         Title = $"{emoji} Last Command Error {emoji}",
         Color = DiscordColor.DarkRed,
       };
+      embed.AddField("Command", Formatter.Underline(Stats.LastCommandToError));
       embed.AddField("Type", Formatter.Bold(type));
       embed.AddField("Message", Formatter.Italic(msg));
       embed.AddField("Trace", Formatter.BlockCode(string.IsNullOrWhiteSpace(stacktrace) ? "No stacktrace attached" : stacktrace));
