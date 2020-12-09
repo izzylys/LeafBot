@@ -16,7 +16,7 @@ namespace LeafBot
 {
   class Program
   {
-    public const string VERSION = "0.5";
+    public const string VERSION = "1.0";
 
     public static string BasePath { get; private set; }
     public static string DataPath { get; private set; }
