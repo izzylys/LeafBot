@@ -42,7 +42,7 @@ namespace LeafBot.Commands
 
       var uptime = (DateTime.Now - Stats.StartTime);
       decimal upDays = uptime.Days;
-      decimal bunYears = Math.Round((upDays / 365) / 75, 6);
+      decimal bunYears = Math.Round((upDays / 365) * 7.5M, 6);
 
       embed.AddField("Version", Program.VERSION, true);
       embed.AddField("DSharp Version", ctx.Client.VersionString, true);
@@ -51,6 +51,7 @@ namespace LeafBot.Commands
       embed.AddField("Commands run", Stats.ExecutedCommands.ToString(), true);
       embed.AddField("Roles picked", Stats.RolesPicked.ToString(), true);
       embed.AddField("Command errors", Stats.CommandErrors == 0 ? $"{tadaEmoji} {Stats.CommandErrors.ToString()} {tadaEmoji}" : Stats.CommandErrors.ToString() + $" {sadEmoji}", true);
+      embed.AddField("Guilds", ctx.Client.Guilds.Count.ToString(), true);
       embed.AddField("Uptime", $"{uptime.Days} days {uptime.Hours} hours {uptime.Minutes} minutes {uptime.Seconds} seconds");
       embed.AddField("Age", $"{bunYears} bunny years {rabbit2Emoji}");
       embed.AddField("Connected to", ctx.Guild.Name.ToString(), true);
@@ -68,8 +69,39 @@ namespace LeafBot.Commands
       var embed = new DiscordEmbedBuilder
       {
         Title = $"LeafBot commands ",
-        Color = DiscordColor.SpringGreen,
+        Color = DiscordColor.SpringGreen
       };
+
+      DiscordEmoji rabbitEmoji = DiscordEmoji.FromName(ctx.Client, ":rabbit:");
+      DiscordEmoji counterEmoji = DiscordEmoji.FromName(ctx.Client, ":slot_machine:");
+      DiscordEmoji gamesEmoji = DiscordEmoji.FromName(ctx.Client, ":video_game:");
+      DiscordEmoji searchEmoji = DiscordEmoji.FromName(ctx.Client, ":mag:");
+      DiscordEmoji utilityEmoji = DiscordEmoji.FromName(ctx.Client, ":gear:");
+      DiscordEmoji helpEmoji = DiscordEmoji.FromName(ctx.Client, ":books:");
+
+      embed.AddField($"Bunnies {rabbitEmoji}",
+        "-> sleepy" + Environment.NewLine +
+        "-> curious" + Environment.NewLine +
+        "-> angry");
+      embed.AddField($"Counters {counterEmoji}",
+        "-> eddieshower");
+      embed.AddField($"Games {gamesEmoji}",
+        "-> rollthedice" + Environment.NewLine +
+        "-> coinflip" + Environment.NewLine +
+        "-> pickrole");
+      embed.AddField($"Searches {searchEmoji}",
+        "-> wikipedia" + Environment.NewLine +
+        "-> urbandictionary");
+      embed.AddField($"Utilities {utilityEmoji}",
+        "-> status" + Environment.NewLine +
+        "-> ping" + Environment.NewLine +
+        "-> uptime"); 
+      embed.AddField($"Utilities {helpEmoji}",
+         "-> help" + Environment.NewLine +
+         "-> about" + Environment.NewLine +
+         "-> commands");
+
+      await ctx.Channel.SendMessageAsync(embed: embed);
 
     }
 
