@@ -88,6 +88,10 @@ namespace LeafBot.Commands
           result += ", ";
         }
       }
+
+      // Add number of roles to stats
+      Stats.RolesPicked += numberOfRoles;
+
       await ctx.RespondAsync($"{ctx.Member.Mention}, you will queue for {result}. {Strings.COMMANDING_STRINGS[random.Next(Strings.COMMANDING_STRINGS.Length)]}!");
     }
   }

@@ -39,6 +39,8 @@ namespace LeafBot.Commands
       embed.AddField("DSharp Version", ctx.Client.VersionString, true);
       embed.AddField("Ping", ctx.Client.Ping.ToString(), true);
       embed.AddField("Bunnies served", Stats.BunniesServed.ToString(), true);
+      embed.AddField("Commands run", Stats.ExecutedCommands.ToString(), true);
+      embed.AddField("Roles picked", Stats.RolesPicked.ToString(), true);
       embed.AddField("Uptime", (DateTime.Now - Stats.StartTime).ToString() + " hours");
       embed.AddField("Connected to", ctx.Guild.Name.ToString(), true);
       embed.AddField("Running on", Stats.PCName, true);

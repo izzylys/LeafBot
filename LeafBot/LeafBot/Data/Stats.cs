@@ -16,6 +16,8 @@ namespace LeafBot.Data
     public static string PCName;
     public static int BunniesServed;
     public static int EddieShowerCount;
+    public static int ExecutedCommands;
+    public static int RolesPicked;
 
     public static string FilePath { get; private set; }
 
@@ -45,6 +47,8 @@ namespace LeafBot.Data
 
         BunniesServed = s.bunnies_served;
         EddieShowerCount = s.eddie_shower_count;
+        ExecutedCommands = s.executed_commands;
+        RolesPicked = s.roles_picked;
       }
     }
 
@@ -59,7 +63,9 @@ namespace LeafBot.Data
         await sw.WriteAsync(
           $"{{" +
           $"\"bunnies_served\": 0," +
-          $"\"eddie_shower_count\": 0" +
+          $"\"eddie_shower_count\": 0," +
+          $"\"roles_picked\": 0," +
+          $"\"executed_commands\": 0" +
           $"}}");
       }
     }
@@ -91,7 +97,9 @@ namespace LeafBot.Data
           await sw.WriteAsync(
             $"{{" +
             $"\"bunnies_served\": {Stats.BunniesServed}," +
-            $"\"eddie_shower_count\": {Stats.EddieShowerCount}" +
+            $"\"eddie_shower_count\": {Stats.EddieShowerCount}," +
+            $"\"roles_picked\": {Stats.RolesPicked}," +
+            $"\"executed_commands\": {Stats.ExecutedCommands}" +
             $"}}");
         }
 

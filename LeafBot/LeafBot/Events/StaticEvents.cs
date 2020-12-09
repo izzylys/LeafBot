@@ -44,6 +44,9 @@ namespace LeafBot.Events
         (e.Context.RawArguments.Count > 0 ? "with arguments '" + e.Context.RawArgumentString + "'" : string.Empty)
       );
 
+      // Increment stats
+      Stats.ExecutedCommands++;
+
       return Task.CompletedTask;
     }
 
