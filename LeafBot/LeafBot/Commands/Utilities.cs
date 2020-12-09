@@ -17,6 +17,7 @@ namespace LeafBot.Commands
     public async Task Status(CommandContext ctx)
     {
       DiscordEmoji rabbitEmoji = DiscordEmoji.FromName(ctx.Client, ":rabbit2:");
+      DiscordEmoji rabbit2Emoji = DiscordEmoji.FromName(ctx.Client, ":rabbit:");
       DiscordEmoji toolsEmoji = DiscordEmoji.FromName(ctx.Client, ":tools:");
       DiscordEmoji tadaEmoji = DiscordEmoji.FromName(ctx.Client, ":tada:");
       DiscordEmoji sadEmoji = DiscordEmoji.FromName(ctx.Client, ":cry:");
@@ -40,6 +41,8 @@ namespace LeafBot.Commands
       };
 
       var uptime = (DateTime.Now - Stats.StartTime);
+      decimal upDays = uptime.Days;
+      decimal bunYears = Math.Round((upDays / 365) / 75, 6);
 
       embed.AddField("Version", Program.VERSION, true);
       embed.AddField("DSharp Version", ctx.Client.VersionString, true);
@@ -49,6 +52,7 @@ namespace LeafBot.Commands
       embed.AddField("Roles picked", Stats.RolesPicked.ToString(), true);
       embed.AddField("Command errors", Stats.CommandErrors == 0 ? $"{tadaEmoji} {Stats.CommandErrors.ToString()} {tadaEmoji}" : Stats.CommandErrors.ToString() + $" {sadEmoji}", true);
       embed.AddField("Uptime", $"{uptime.Days} days {uptime.Hours} hours {uptime.Minutes} minutes {uptime.Seconds} seconds");
+      embed.AddField("Age", $"{bunYears} bunny years {rabbit2Emoji}");
       embed.AddField("Connected to", ctx.Guild.Name.ToString(), true);
       embed.AddField("Running on", Stats.PCName, true);
 
@@ -86,10 +90,12 @@ namespace LeafBot.Commands
     [Description("See how long leafbot has been awake for")]
     public async Task Uptime(CommandContext ctx)
     {
+      DiscordEmoji rabbitEmoji = DiscordEmoji.FromName(ctx.Client, ":rabbit:");
+
       var uptime = (DateTime.Now - Stats.StartTime);
       decimal upDays = uptime.Days;
       decimal bunYears = Math.Round((upDays / 365) / 75, 6);
-      await ctx.Channel.SendMessageAsync($"LeafBot has been awake for {uptime.Days} days {uptime.Hours} hours {uptime.Minutes} minutes {uptime.Seconds} seconds (or {bunYears} bunny years)");
+      await ctx.Channel.SendMessageAsync($"LeafBot has been awake for {uptime.Days} days {uptime.Hours} hours {uptime.Minutes} minutes {uptime.Seconds} seconds (or {bunYears} bunny years {rabbitEmoji})");
     }
 
     [Command("error")]
