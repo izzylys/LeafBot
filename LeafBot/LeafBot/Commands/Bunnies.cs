@@ -31,6 +31,7 @@ namespace LeafBot.Commands
     public async Task Curious(CommandContext ctx)
     {
       Stats.BunniesServed++;
+
       var embed = new DiscordEmbedBuilder
       {
         Color = DiscordColor.HotPink,
@@ -43,22 +44,14 @@ namespace LeafBot.Commands
     [Description("curses you with a photo of an angry bun")]
     public async Task Angry(CommandContext ctx)
     {
+      Stats.BunniesServed++;
+
       var embed = new DiscordEmbedBuilder
       {
         Color = DiscordColor.Red,
         ImageUrl = Links.ANGRY_BUNS[rng.Next(Links.ANGRY_BUNS.Length)]
       };
       await ctx.Channel.SendMessageAsync(embed: embed);
-    }
-
-    [Command("buns")]
-    [Description("LeafBot promptly informs you of how many buns have been digitally liberated")]
-    [Aliases("buncount", "count")]
-    public async Task ServedBuns(CommandContext ctx)
-    {
-      DiscordEmoji emoji = DiscordEmoji.FromName(ctx.Client, ":rabbit:");
-
-      await ctx.Channel.SendMessageAsync($"LeafBot has {Strings.DELIVERED_STRINGS[rng.Next(Strings.DELIVERED_STRINGS.Length)]} {Stats.BunniesServed} bunnies {emoji}");
     }
   }
 }

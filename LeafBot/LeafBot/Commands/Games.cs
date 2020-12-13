@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
@@ -47,7 +48,7 @@ namespace LeafBot.Commands
 
     [Command("role")]
     [Description("LeafBot will decide what role you should queue as, indecisive fool...")]
-    [Aliases("icantdecide", "pickrole", "halp", "queue", "roles")]
+    [Aliases("icantdecide", "pickrole", "halp", "queue", "roles", "rolepicker")]
     public async Task PickRole(CommandContext ctx)
     {
       DiscordEmoji damageEmoji = DiscordEmoji.FromName(ctx.Client, ":crossed_swords:");
@@ -88,7 +89,33 @@ namespace LeafBot.Commands
           result += ", ";
         }
       }
+
+      // Add number of roles to stats
+      Stats.RolesPicked += numberOfRoles;
+
       await ctx.RespondAsync($"{ctx.Member.Mention}, you will queue for {result}. {Strings.COMMANDING_STRINGS[random.Next(Strings.COMMANDING_STRINGS.Length)]}!");
+    }
+
+    [Command("bunnyage")]
+    [Description("Using advanced mathmatics, trigenometric reverse algebra and college level pagan science, Leafbot will work out your age in bunny years")]
+    [Aliases("age", "mebunny", "bunage")]
+    public async Task BunnyAge(CommandContext ctx, [RemainingText, Description("Your age in homan years")] int age = 0)
+    {
+      if (age == 0)
+      {
+        DiscordEmoji emoji = DiscordEmoji.FromName(ctx.Client, ":rolling_eyes:");
+        await ctx.Channel.SendMessageAsync($"Yeah I can't guess your age.. You must be {Formatter.Italic("reallly")} old.. {emoji}");
+        return;
+      }
+
+      DiscordEmoji rabbitEmoji = DiscordEmoji.FromName(ctx.Client, ":rabbit:");
+      DiscordEmoji tadaEmoji = DiscordEmoji.FromName(ctx.Client, ":tada:");
+
+      decimal yourYears = age;
+      decimal bunAgeFactor = 7.5M;
+      decimal bunYears = Math.Round(yourYears * bunAgeFactor, 1);
+
+      await ctx.RespondAsync($"{ctx.Member.Mention} you are {bunYears} bunny years old, congratulations! {rabbitEmoji} {tadaEmoji}");
     }
   }
 }

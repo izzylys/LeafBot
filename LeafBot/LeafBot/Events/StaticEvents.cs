@@ -10,6 +10,7 @@ using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 using Newtonsoft.Json;
 
@@ -22,6 +23,9 @@ namespace LeafBot.Events
     public static Task Client_Ready(DiscordClient sender, ReadyEventArgs e)
     {
       sender.Logger.LogInformation(Program.BotEventId, "Client is ready to process events.");
+
+      // Update presence
+      StaticEvents.PresenceTimer_Elapsed(sender);
 
       return Task.CompletedTask;
     }
@@ -43,6 +47,9 @@ namespace LeafBot.Events
         (e.Context.RawArguments.Count > 0 ? "with arguments '" + e.Context.RawArgumentString + "'" : string.Empty)
       );
 
+      // Increment stats
+      Stats.ExecutedCommands++;
+
       return Task.CompletedTask;
     }
 
@@ -57,6 +64,8 @@ namespace LeafBot.Events
         e.Exception.Message ?? "<no message>"
       );
 
+
+
       if (e.Exception is CommandNotFoundException ex)
       {
 
@@ -69,7 +78,18 @@ namespace LeafBot.Events
           ImageUrl = Links.COMMAND_NOT_FOUND_BUN,
           Color = DiscordColor.DarkRed,
         };
+
+        // Bunny pic so bunny been served
+        Stats.BunniesServed++;
+
         await e.Context.RespondAsync("", embed : embed);
+      }
+      else
+      {
+        // Save exception details to stats for any none commandnotfound exceptions
+        Stats.LastCommandToError = e.Command?.QualifiedName;
+        Stats.LastCommandException = e.Exception;
+        Stats.CommandErrors++;
       }
     }
 
@@ -78,7 +98,21 @@ namespace LeafBot.Events
       client.Logger.LogInformation("Save timer elapsed. Attempting to save stats to local store", DateTime.Now);
 
       // Save our stats object to file
-      Stats.Save(client);
+      await Stats.Save(client);
+    }
+
+    public static async void PresenceTimer_Elapsed(DiscordClient client)
+    {
+      try
+      {
+        // Set the bot game status
+        await client.UpdateStatusAsync(new DSharpPlus.Entities.DiscordActivity("with bunnies | !about"), DSharpPlus.Entities.UserStatus.Online, null);
+        client.Logger.LogInformation("Presence updated", DateTime.Now);
+      }
+      catch (Exception ex)
+      {
+        client.Logger.LogError($"An error occurred while updating presence ({ex.GetType()}: {ex.Message})", DateTime.Now);
+      }
     }
 
   }

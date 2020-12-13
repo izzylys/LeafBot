@@ -16,17 +16,26 @@ namespace LeafBot.Data
     public static string PCName;
     public static int BunniesServed;
     public static int EddieShowerCount;
+    public static int ExecutedCommands;
+    public static int RolesPicked;
+    public static int CommandErrors;
+
+    // Store last command exception to display info using !error command
+    public static string LastCommandToError = "";
+    public static Exception LastCommandException = null;
 
     public static string FilePath { get; private set; }
 
     public static async void Initialise()
     {
-      // save session stats
+      // init stats
       StartTime = DateTime.Now;
       PCName = Environment.MachineName;
-
+      CommandErrors = 0;
+      
       FilePath = Path.Combine(Program.DataPath, "stats_store.json");
 
+      // Create stats file if it doesn't already exist
       if (!File.Exists(FilePath))
       {
         if (!Directory.Exists(Path.GetDirectoryName(FilePath)))
@@ -38,6 +47,7 @@ namespace LeafBot.Data
         return;
       }
 
+      // Read stats from the stats file
       using(StreamReader file = File.OpenText(FilePath))
       {
         var json = await file.ReadToEndAsync();
@@ -45,6 +55,8 @@ namespace LeafBot.Data
 
         BunniesServed = s.bunnies_served;
         EddieShowerCount = s.eddie_shower_count;
+        ExecutedCommands = s.executed_commands;
+        RolesPicked = s.roles_picked;
       }
     }
 
@@ -59,12 +71,14 @@ namespace LeafBot.Data
         await sw.WriteAsync(
           $"{{" +
           $"\"bunnies_served\": 0," +
-          $"\"eddie_shower_count\": 0" +
+          $"\"eddie_shower_count\": 0," +
+          $"\"roles_picked\": 0," +
+          $"\"executed_commands\": 0" +
           $"}}");
       }
     }
 
-    public static async void Save(DiscordClient client = null)
+    public static async Task Save(DiscordClient client = null)
     {
       var backupPath = Path.Combine(Program.DataPath, "stats_store_backup.json");
 
@@ -91,7 +105,9 @@ namespace LeafBot.Data
           await sw.WriteAsync(
             $"{{" +
             $"\"bunnies_served\": {Stats.BunniesServed}," +
-            $"\"eddie_shower_count\": {Stats.EddieShowerCount}" +
+            $"\"eddie_shower_count\": {Stats.EddieShowerCount}," +
+            $"\"roles_picked\": {Stats.RolesPicked}," +
+            $"\"executed_commands\": {Stats.ExecutedCommands}" +
             $"}}");
         }
 

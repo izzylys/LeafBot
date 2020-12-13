@@ -22,7 +22,7 @@ namespace LeafBot.Commands
     [Description("Instructs leafbot to search for a term on wikipedia (you smart person you)")]
     [Aliases("search", "wikipedia", "w")]
     // Based off: https://gitlab.com/Kwoth/nadekobot/-/blob/1.9/NadekoBot.Core/Modules/Searches/Searches.cs#L650
-    public async Task Wiki(CommandContext ctx, [RemainingText] string query = null)
+    public async Task Wiki(CommandContext ctx, [RemainingText, Description("Term/thingie to search for")] string query = null)
     {
       // trim and sanity check query string
       query = query?.Trim();
@@ -59,7 +59,7 @@ namespace LeafBot.Commands
     [Command("urbandictionary")]
     [Description("Instructs leafbot to search for a term on urban dictionary (wow really high class humour you got there bud)")]
     [Aliases("ud", "lookup", "define")]
-    public async Task UrbanDictionary(CommandContext ctx, [RemainingText] string query = null)
+    public async Task UrbanDictionary(CommandContext ctx, [RemainingText, Description("Thingie to look up in dictionary")] string query = null)
     {
       query = query?.Trim();
       if (string.IsNullOrWhiteSpace(query))
