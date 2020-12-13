@@ -101,6 +101,13 @@ namespace LeafBot.Commands
     [Aliases("age", "mebunny", "bunage")]
     public async Task BunnyAge(CommandContext ctx, [RemainingText, Description("Your age in homan years")] int age = 0)
     {
+      if (age == 0)
+      {
+        DiscordEmoji emoji = DiscordEmoji.FromName(ctx.Client, ":rolling_eyes:");
+        await ctx.Channel.SendMessageAsync($"Yeah I can't guess your age.. You must be {Formatter.Italic("reallly")} old.. {emoji}");
+        return;
+      }
+
       DiscordEmoji rabbitEmoji = DiscordEmoji.FromName(ctx.Client, ":rabbit:");
       DiscordEmoji tadaEmoji = DiscordEmoji.FromName(ctx.Client, ":tada:");
 
