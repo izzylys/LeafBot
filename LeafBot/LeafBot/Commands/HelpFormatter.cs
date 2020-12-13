@@ -29,7 +29,10 @@ namespace LeafBot.Commands
       EmbedBuilder.Title = $"{HelpEmoji} '{command.Name}'";
 
       EmbedBuilder.AddField("Description", Formatter.Italic(command.Description));
-      EmbedBuilder.AddField("Aliases", string.Join(", ", command.Aliases.Select(x => Formatter.InlineCode(x))));
+
+      // Print any aliases if the command has any
+      if (command.Aliases.Count != 0)
+        EmbedBuilder.AddField("Aliases", string.Join(", ", command.Aliases.Select(x => Formatter.InlineCode(x))));
 
       // Print arguments list
       foreach (var overload in command.Overloads)
