@@ -111,7 +111,7 @@ namespace LeafBot.Events
       }
       catch (Exception ex)
       {
-        client.Logger.LogError($"An error occured while updating presence ({ex.GetType()}: {ex.Message})", DateTime.Now);
+        client.Logger.LogError($"An error occurred while updating presence ({ex.GetType()}: {ex.Message})", DateTime.Now);
       }
     }
 
