@@ -12,7 +12,8 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy /y &quot;$(ProjectDir)config.json&quot; &quot;$(TargetDir)&quot;" />
+    <Exec Command="xcopy /y &quot;$(ProjectDir)config.json&quot; &quot;$(TargetDir)&quot;" Condition="'$(OS)' == 'Windows_NT'" />
+    <Exec Command="cp &quot;$(ProjectDir)config.json&quot; &quot;$(TargetDir)&quot;" Condition="'$(OS)' != 'Windows_NT'" />
   </Target>
 
 </Project>
